@@ -1,13 +1,14 @@
-package com.quangtd.qmazes.game
+package com.quangtd.qmazes.game.thread
 
 import com.quangtd.qmazes.common.CommonConstants
-import com.quangtd.qmazes.util.LogUtils
+import com.quangtd.qmazes.game.gamemanager.GameManager
+import com.quangtd.qmazes.game.gameview.GamePanel
 
 /**
  * Created by quang.td95@gmail.com
  * on 9/2/2018.
  */
-class GameThread(var gameManager: GameManager, var gameInterface: GameInterface) : Thread() {
+class GameThread(var gameManager: GameManager, var gamePanel: GamePanel) : Thread() {
     private var targetTime = 1000 / CommonConstants.FPS
     @Volatile
     var stopFlg = false
@@ -22,7 +23,7 @@ class GameThread(var gameManager: GameManager, var gameInterface: GameInterface)
             if (renderFlg) {
                 startRenderTime = System.currentTimeMillis()
                 gameManager.update()
-                gameInterface.draw()
+                gamePanel.draw()
                 elapsedTime = System.currentTimeMillis() - startRenderTime
                 waitingTime = targetTime - elapsedTime
                 if (waitingTime < 0) waitingTime = 5

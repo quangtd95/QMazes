@@ -1,4 +1,4 @@
-package com.quangtd.qmazes.mvpbase;
+package com.quangtd.qmazes.util;
 
 import android.app.Dialog;
 import android.content.Context;

@@ -2,9 +2,8 @@ package com.quangtd.qmazes.ui.screen.level
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.quangtd.qmazes.common.CommonConstants
 import com.quangtd.qmazes.data.model.Level
-import com.quangtd.qmazes.game.GameKind
+import com.quangtd.qmazes.game.enums.GameKind
 import com.quangtd.qmazes.util.SharedPreferencesUtils
 import com.quangtd.qstudio.mvpbase.BasePresenter
 import com.quangtd.qstudio.mvpbase.IAdapterData

@@ -1,4 +1,4 @@
-package com.quangtd.qmazes.game
+package com.quangtd.qmazes.game.gameview
 
 import android.content.Context
 import android.graphics.*
@@ -6,6 +6,9 @@ import android.view.SurfaceHolder
 import com.quangtd.qmazes.data.model.Door
 import com.quangtd.qmazes.data.model.MazeMap
 import com.quangtd.qmazes.data.model.Player
+import com.quangtd.qmazes.game.enums.GameState
+import com.quangtd.qmazes.game.enums.RenderState
+import com.quangtd.qmazes.game.gamemanager.GameManager
 import com.quangtd.qmazes.util.ScreenUtils
 
 /**
@@ -13,7 +16,7 @@ import com.quangtd.qmazes.util.ScreenUtils
  * on 9/2/2018.
  */
 open class MazePanel(var context: Context, var gameManager: GameManager,
-                     var viewHolder: SurfaceHolder) : GameInterface {
+                     var viewHolder: SurfaceHolder) : GamePanel {
 
     protected var renderCallback: RenderState.RenderCallback? = null
     protected var widthScreen: Int = 0
@@ -36,7 +39,7 @@ open class MazePanel(var context: Context, var gameManager: GameManager,
     }
 
     override fun resetValue() {
-        widthWall = widthCell / 15
+        widthWall = widthCell / 7
         currentIntroBackground = widthCell * map.r
         velocityIntro = widthCell * map.r / 20
     }
@@ -90,6 +93,8 @@ open class MazePanel(var context: Context, var gameManager: GameManager,
 
     open fun drawEvery() {
         when (gameState) {
+            GameState.LOADED -> {
+            }
             GameState.INTRO -> {
                 drawIntro()
             }
@@ -182,7 +187,6 @@ open class MazePanel(var context: Context, var gameManager: GameManager,
     }
 
     open fun drawWall(canvas: Canvas) {
-        paintWall.strokeWidth = widthWall
         map.w.forEach { it.draw(canvas, paintWall) }
     }
 

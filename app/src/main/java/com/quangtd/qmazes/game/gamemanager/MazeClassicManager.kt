@@ -1,21 +1,22 @@
-package com.quangtd.qmazes.game
+package com.quangtd.qmazes.game.gamemanager
 
 import android.content.Context
-import com.quangtd.qmazes.data.model.GameDirection
-import com.quangtd.qmazes.data.model.MazeMap
+import com.quangtd.qmazes.data.model.Player
+import com.quangtd.qmazes.game.enums.GameKind
+import com.quangtd.qmazes.game.enums.GameState
 
 /**
  * Created by quang.td95@gmail.com
  * on 9/2/2018.
  */
 open class MazeClassicManager(level: Int = 1, gameKind: GameKind = GameKind.CLASSIC) :
-        AbstractGameManager(gameKind, level), PlayerCallBack {
+        AbstractGameManager(gameKind, level), Player.PlayerCallBack {
 
     override fun changeDirectionCallBack() {
         soundManager.playTouchSound()
     }
 
-    override fun stopCallback() {
+    override fun onStop() {
     }
 
     override fun loadGame(context: Context) {

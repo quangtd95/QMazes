@@ -2,10 +2,17 @@ package com.quangtd.qmazes.ui.screen.game
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.quangtd.qmazes.data.model.GameDirection
+import com.quangtd.qmazes.game.enums.GameDirection
 import com.quangtd.qmazes.data.model.Level
-import com.quangtd.qmazes.game.*
-import com.quangtd.qmazes.mvpbase.DialogUtils
+import com.quangtd.qmazes.game.enums.GameKind
+import com.quangtd.qmazes.game.enums.GameState
+import com.quangtd.qmazes.game.enums.RenderState
+import com.quangtd.qmazes.game.gamemanager.GameManager
+import com.quangtd.qmazes.game.gamemanager.MazeClassicManager
+import com.quangtd.qmazes.game.gamemanager.TrapsGameManager
+import com.quangtd.qmazes.game.gameview.*
+import com.quangtd.qmazes.game.thread.GameThread
+import com.quangtd.qmazes.util.DialogUtils
 import com.quangtd.qmazes.util.LogUtils
 import com.quangtd.qmazes.ui.component.OnSwipeListener
 import com.quangtd.qmazes.util.SharedPreferencesUtils
@@ -20,7 +27,7 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
 
     private var pref: SharedPreferencesUtils? = null
     private var gameManager: GameManager? = null
-    private var gameInterface: GameInterface? = null
+    private var gamePanel: GamePanel? = null
     private lateinit var gameThread: GameThread
     private var view: IGameView? = null
     private var setupGameFinish = false
@@ -31,26 +38,32 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
 
     fun setUpGame(level: Level) {
         this.level = level
-        gameManager = MazeClassicManager(level.id, gameKind = level.gameKind)
-        gameInterface = when (level.gameKind) {
+        when (level.gameKind) {
             GameKind.CLASSIC -> {
-                MazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
+                gameManager = MazeClassicManager(level.id, gameKind = GameKind.CLASSIC)
+                gamePanel = MazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
             }
             GameKind.DARKNESS -> {
-                DarknessMazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
+                gameManager = MazeClassicManager(level.id, gameKind = GameKind.DARKNESS)
+                gamePanel = DarknessMazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
             }
             GameKind.ICE -> {
-                IceFloorMazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
+                gameManager = MazeClassicManager(level.id, gameKind = GameKind.ICE)
+                gamePanel = IceFloorMazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
+            }
+            GameKind.TRAP -> {
+                gameManager = TrapsGameManager(level.id, gameKind = GameKind.TRAP)
+                gamePanel = TrapsMazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
             }
         }
 
         gameManager!!.bindGameStateCallback(this)
         gameManager!!.bindRenderCallback(this)
-        gameInterface!!.bindRenderCalBack(this)
+        gamePanel!!.bindRenderCalBack(this)
 
         gameManager!!.loadGame(getContext()!!)
 
-        gameThread = GameThread(gameManager!!, gameInterface!!)
+        gameThread = GameThread(gameManager!!, gamePanel!!)
         gameThread.start()
         setupGameFinish = true
         pref = SharedPreferencesUtils.getInstance(getContext())
@@ -119,19 +132,19 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
 
     override fun onGameStateChangeCallback(gameState: GameState) {
         LogUtils.e(gameState.name)
-        gameInterface?.setState(gameState)
+        gamePanel?.setState(gameState)
         when (gameState) {
             GameState.LOADING -> {
             }
             GameState.LOADED -> {
-                gameInterface!!.loadGameUI(object : MazePanel.LoadGameUICallBack {
+                gamePanel!!.loadGameUI(object : MazePanel.LoadGameUICallBack {
                     override fun onLoadedUI() {
                         gameManager!!.forceChangeGameState(GameState.INTRO)
                     }
                 })
             }
             GameState.INTRO -> {
-                gameInterface!!.resetValue()
+                gamePanel!!.resetValue()
             }
             GameState.PLAYING -> {
             }

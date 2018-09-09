@@ -1,4 +1,4 @@
-package com.quangtd.qmazes.game
+package com.quangtd.qmazes.data.model
 
 import android.graphics.Canvas
 import android.graphics.Paint

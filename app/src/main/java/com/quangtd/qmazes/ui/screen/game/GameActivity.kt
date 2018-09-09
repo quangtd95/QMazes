@@ -11,7 +11,7 @@ import com.quangtd.qmazes.common.CommonConstants
 import com.quangtd.qmazes.data.model.Category
 import com.quangtd.qmazes.data.model.Level
 import com.quangtd.qmazes.mvpbase.BaseActivity
-import com.quangtd.qmazes.mvpbase.DialogUtils
+import com.quangtd.qmazes.util.DialogUtils
 import com.quangtd.qmazes.ui.screen.level.LevelActivity
 import com.quangtd.qmazes.util.LogUtils
 import com.quangtd.qmazes.ui.component.OnSwipeListener
@@ -30,24 +30,47 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        level = intent.getSerializableExtra("level") as Level?
+        setContentView(R.layout.activity_game)
+        initValues()
+        initViews()
+        initActions()
+    }
+
+    private fun initValues() {
+        level = intent.getSerializableExtra(CommonConstants.INTENT_LEVEL) as Level?
         if (level == null) {
             level = Level(1)
         }
-        setContentView(R.layout.activity_game)
+    }
+
+    private fun initViews() {
         tvTitle.text = "${level!!.gameKind.nameKind} + ${level!!.id}"
-        val surfaceHolder = mazeView.getSurfaceHolder()
-        surfaceHolder.addCallback(this)
+    }
+
+
+    private fun initActions() {
+        mazeView.getSurfaceHolder().addCallback(this)
         mDetector = GestureDetectorCompat(this, object : OnSwipeListener() {
             override fun onSwipe(direction: Direction): Boolean {
                 getPresenter(this@GameActivity).move(direction)
                 return true
             }
         })
-        reload.setOnClickListener { getPresenter(this@GameActivity).reload() }
+        reload.setOnClickListener {
+            getPresenter(this@GameActivity).pauseGame()
+            DialogUtils.createConfirmDialog(this, "Reload current game?", "",
+                    object : DialogUtils.DialogConfirmCallback {
+                        override fun onClickPositiveButton() {
+                            getPresenter(this@GameActivity).resumeGame()
+                            getPresenter(this@GameActivity).reload()
+                        }
+
+                        override fun onClickNegativeButton() {
+                            getPresenter(this@GameActivity).resumeGame()
+                        }
+                    })
+        }
         menu.setOnClickListener { onBackPressed() }
-
-
     }
 
     override fun getSurfaceHolder(): SurfaceHolder {
@@ -89,15 +112,14 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
     override fun showWinGameAlert() {
         runOnUiThread {
             uiChangeListener()
-            DialogUtils.createAlertDialog(this, "YOU WIN! level ${level!!.id}", CommonConstants.CONGRATE_MESSAGE[Random().nextInt(CommonConstants.CONGRATE_MESSAGE.size)], {
-
+            DialogUtils.createAlertDialog(this, "YOU WIN! level ${level!!.id}", CommonConstants.CONGRATE_MESSAGE[Random().nextInt(CommonConstants.CONGRATE_MESSAGE.size)]) {
                 level!!.apply {
                     id += 1
                 }
                 startNewGame(this@GameActivity, level!!)
                 getPresenter(this).stopGame()
                 finish()
-            })
+            }
         }
     }
 
@@ -105,9 +127,9 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
         fun startNewGame(context: Context, level: Level) {
             val intent = Intent(context, GameActivity::class.java)
             if (level.id <= level.gameKind.totalLevel) {
-                intent.putExtra("level", level)
+                intent.putExtra(CommonConstants.INTENT_LEVEL, level)
             } else {
-                intent.putExtra("level", Level(1, level.gameKind))
+                intent.putExtra(CommonConstants.INTENT_LEVEL, Level(1, level.gameKind))
             }
             context.startActivity(intent)
         }

@@ -1,6 +1,6 @@
 package com.quangtd.qmazes.data.model
 
-import com.quangtd.qmazes.game.GameKind
+import com.quangtd.qmazes.game.enums.GameKind
 import com.quangtd.qmazes.mvpbase.BaseModel
 import java.io.Serializable
 

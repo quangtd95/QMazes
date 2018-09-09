@@ -1,9 +1,13 @@
-package com.quangtd.qmazes.game
+package com.quangtd.qmazes.game.gameview
 
 import android.content.Context
 import android.view.SurfaceHolder
 import android.graphics.*
 import android.graphics.Bitmap
+import com.quangtd.qmazes.game.enums.GameState
+import com.quangtd.qmazes.game.enums.IntroState
+import com.quangtd.qmazes.game.enums.RenderState
+import com.quangtd.qmazes.game.gamemanager.GameManager
 
 
 /**
@@ -11,7 +15,7 @@ import android.graphics.Bitmap
  * on 9/3/2018.
  */
 class DarknessMazePanel(context: Context, gameManager: GameManager, viewHolder: SurfaceHolder) : MazePanel(context, gameManager, viewHolder) {
-
+    private var introState = IntroState.STATE_1
     private var darknessPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var tempPaint = Paint(Paint.FILTER_BITMAP_FLAG).apply {
         alpha = 0
@@ -41,22 +45,34 @@ class DarknessMazePanel(context: Context, gameManager: GameManager, viewHolder: 
 
     override fun drawIntro() {
         super.drawGame(true)
-        super.drawIntroBackground()
-        drawDarkness(radiusLightPlayerIntro, radiusLightDoorIntro)
-        drawBound(canvas)
 
-        radiusLightDoorIntro -= velocityIntro
-        radiusLightPlayerIntro -= velocityIntro
-
-        if (radiusLightDoorIntro <= defaultRadiusLightDoor) {
-            radiusLightDoorIntro = defaultRadiusLightDoor
+        if (introState == IntroState.STATE_1) {
+            super.drawIntroBackground()
         }
-        if (radiusLightPlayerIntro <= defaultRadiusLightPlayer()) {
-            radiusLightPlayerIntro = defaultRadiusLightPlayer()
+        if (currentIntroBackground <= 0) {
+            introState = IntroState.STATE_2
+        }
+        if (introState == IntroState.STATE_2) {
+            drawDarkness(radiusLightPlayerIntro, radiusLightDoorIntro)
+            radiusLightDoorIntro -= velocityIntro
+            radiusLightPlayerIntro -= velocityIntro
+
+            if (radiusLightDoorIntro <= defaultRadiusLightDoor) {
+                radiusLightDoorIntro = defaultRadiusLightDoor
+            }
+            if (radiusLightPlayerIntro <= defaultRadiusLightPlayer()) {
+                radiusLightPlayerIntro = defaultRadiusLightPlayer()
+            }
         }
         if (radiusLightPlayerIntro == defaultRadiusLightPlayer() && radiusLightDoorIntro == defaultRadiusLightDoor) {
+            introState = IntroState.FINAL
+        }
+        if (introState == IntroState.FINAL) {
             gameManager.forceChangeGameState(GameState.PLAYING)
         }
+        drawBound(canvas)
+
+
         renderCallback?.changeRenderState(RenderState.REQUEST_RENDER)
     }
 
@@ -88,7 +104,6 @@ class DarknessMazePanel(context: Context, gameManager: GameManager, viewHolder: 
         defaultRadiusLightDoor = widthCell * map.c / 8
         radiusLightPlayerIntro = widthCell * map.c
         radiusLightDoorIntro = widthCell * map.c
+        introState = IntroState.STATE_1
     }
-
-
 }

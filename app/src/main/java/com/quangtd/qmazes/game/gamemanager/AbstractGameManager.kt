@@ -1,8 +1,9 @@
-package com.quangtd.qmazes.game
+package com.quangtd.qmazes.game.gamemanager
 
 import android.content.Context
 import com.google.gson.Gson
 import com.quangtd.qmazes.data.model.*
+import com.quangtd.qmazes.game.enums.*
 import com.quangtd.qmazes.util.ScreenUtils
 import java.io.File
 
@@ -23,7 +24,7 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
     override fun loadGame(context: Context) {
         forceChangeGameState(GameState.LOADING)
         //load image
-        ResourceManager.initResource(context)
+        BitmapManager.initResource(context)
         //load sound
         soundManager = SoundManager.getInstance(context)
         //load map
@@ -34,12 +35,25 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
 
     open fun initGame(context: Context) {
         widthCell = (ScreenUtils.getWidthScreen(context).toFloat() / map.c)
-        map.w.forEach { wall -> wall.widthCell = widthCell }
+        map.w.forEach { wall ->
+            wall.widthCell = widthCell
+            wall.widthWall = widthCell / 7
+        }
         map.i.forEach { ice -> ice.widthCell = widthCell }
-        player = if (gameKind == GameKind.ICE) {
-            PlayerIceFloor(map)
-        } else {
-            Player(map)
+        map.t.forEach { trap ->
+            when {
+                trap.d == "d" -> trap.direction = GameDirection.UP
+                trap.d == "u" -> trap.direction = GameDirection.DOWN
+                trap.d == "r" -> trap.direction = GameDirection.RIGHT
+                trap.d == "l" -> trap.direction = GameDirection.LEFT
+            }
+            trap.map = map
+            trap.widthCell = widthCell
+        }
+        player = when (gameKind) {
+            GameKind.ICE -> PlayerIceFloor(map)
+            GameKind.TRAP -> PlayerTrap(map)
+            else -> Player(map)
         }
         player.widthCell = widthCell
         door = Door(map, player)
@@ -73,6 +87,9 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
             it.o.x = map.c - 1 - it.o.x
             it.d.x = map.c - 1 - it.d.x
         }
+        map.i.forEach {
+            it.x = map.c - (it.x - 0.5F) + 0.5F
+        }
     }
 
     private fun flipVMap(map: MazeMap) {
@@ -81,6 +98,9 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
         map.w.forEach {
             it.o.y = map.r - 1 - it.o.y
             it.d.y = map.r - 1 - it.d.y
+        }
+        map.i.forEach {
+            it.y = map.r - (it.y - 0.5F) + 0.5F
         }
     }
 
@@ -94,6 +114,10 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
             it.d.x = map.c - 1 - it.d.x
             it.o.y = map.r - 1 - it.o.y
             it.d.y = map.r - 1 - it.d.y
+        }
+        map.i.forEach {
+            it.x = map.c - (it.x - 0.5F) + 0.5F
+            it.y = map.r - (it.y - 0.5F) + 0.5F
         }
     }
 

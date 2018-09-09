@@ -2,7 +2,7 @@ package com.quangtd.qstudio.mvpbase
 
 import android.content.Context
 import android.os.Bundle
-import com.quangtd.qmazes.mvpbase.DialogUtils
+import com.quangtd.qmazes.util.DialogUtils
 
 /**
  * Created by QuangTD

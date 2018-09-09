@@ -1,5 +1,7 @@
 package com.quangtd.qmazes.data.model
 
+import com.quangtd.qmazes.game.enums.GameDirection
+
 /**
  * Created by quang.td95@gmail.com
  * on 9/7/2018.

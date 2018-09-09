@@ -2,8 +2,7 @@ package com.quangtd.qmazes.data.model
 
 import android.graphics.*
 import android.support.v4.math.MathUtils
-import com.quangtd.qmazes.game.ResourceManager
-import com.quangtd.qmazes.game.Sprite
+import com.quangtd.qmazes.game.gamemanager.BitmapManager
 
 /**
  * Created by quang.td95@gmail.com
@@ -19,13 +18,12 @@ data class Door(var x: Int = 0, var y: Int = 0, var player: Player) : Sprite() {
         return centerPt
     }
 
-    private var doorImages: Array<Bitmap> = ResourceManager.getInstance().door!!
+    private var doorImages: Array<Bitmap> = BitmapManager.getInstance().door!!
 
     override fun update() {
     }
 
     override fun draw(canvas: Canvas, paint: Paint) {
-//        canvas.drawCircle(x * widthCell + widthCell / 2, y * widthCell + widthCell / 2, widthCell / 3, paint)
         matrix.reset()
         matrix.setScale(widthCell / doorImages[0].width, widthCell / doorImages[0].width)
         matrix.postTranslate(widthCell * x, widthCell * y)

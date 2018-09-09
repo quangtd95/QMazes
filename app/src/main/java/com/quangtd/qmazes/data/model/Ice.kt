@@ -1,9 +1,7 @@
 package com.quangtd.qmazes.data.model
 
 import android.graphics.Canvas
-import android.graphics.Color
 import android.graphics.Paint
-import com.quangtd.qmazes.game.Sprite
 
 /**
  * Created by quang.td95@gmail.com

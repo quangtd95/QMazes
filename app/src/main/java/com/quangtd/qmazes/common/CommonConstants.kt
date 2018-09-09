@@ -1,7 +1,5 @@
 package com.quangtd.qmazes.common
 
-import com.quangtd.qmazes.game.GameKind
-
 /**
  * Created by quang.td95@gmail.com
  * on 9/2/2018.
@@ -10,6 +8,7 @@ class CommonConstants {
     companion object {
         const val FPS = 60L
         const val DEFAULT_FONT = "SerreriaSobria.otf"
+        const val INTENT_LEVEL = "level"
         val CONGRATE_MESSAGE = arrayOf(
                 "Trông bạn tuyệt lắm!",
                 "bạn lúc nào cũng thật xinh đẹp!",

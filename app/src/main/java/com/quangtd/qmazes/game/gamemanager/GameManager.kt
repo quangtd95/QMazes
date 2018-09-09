@@ -1,10 +1,12 @@
-package com.quangtd.qmazes.game
+package com.quangtd.qmazes.game.gamemanager
 
 import android.content.Context
 import com.quangtd.qmazes.data.model.Door
-import com.quangtd.qmazes.data.model.GameDirection
+import com.quangtd.qmazes.game.enums.GameDirection
 import com.quangtd.qmazes.data.model.MazeMap
 import com.quangtd.qmazes.data.model.Player
+import com.quangtd.qmazes.game.enums.GameState
+import com.quangtd.qmazes.game.enums.RenderState
 
 /**
  * Created by quang.td95@gmail.com

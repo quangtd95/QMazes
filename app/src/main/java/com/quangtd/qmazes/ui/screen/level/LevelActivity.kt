@@ -6,7 +6,7 @@ import android.os.Bundle
 import com.quangtd.qmazes.R
 import com.quangtd.qmazes.data.model.Category
 import com.quangtd.qmazes.data.model.Level
-import com.quangtd.qmazes.game.GameKind
+import com.quangtd.qmazes.game.enums.GameKind
 import com.quangtd.qmazes.mvpbase.BaseActivity
 import com.quangtd.qmazes.ui.screen.game.GameActivity
 import com.quangtd.qmazes.util.RecyclerViewUtils

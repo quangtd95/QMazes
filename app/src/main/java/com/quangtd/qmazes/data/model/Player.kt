@@ -3,8 +3,7 @@ package com.quangtd.qmazes.data.model
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
-import com.quangtd.qmazes.game.PlayerCallBack
-import com.quangtd.qmazes.game.Sprite
+import com.quangtd.qmazes.game.enums.GameDirection
 import java.util.*
 import kotlin.math.sqrt
 
@@ -30,7 +29,7 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
     private var centerPointF = android.graphics.PointF()
     var playerCallback: PlayerCallBack? = null
 
-    fun getPlayerCenterPoint(): android.graphics.PointF {
+    private fun getPlayerCenterPoint(): android.graphics.PointF {
         centerPoint.x = (x * widthCell + widthCell / 2)
         centerPoint.y = (y * widthCell + widthCell / 2)
         return centerPoint
@@ -48,7 +47,7 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
     }
     private var direction: GameDirection = GameDirection.STOP
     var lastDirection: GameDirection = GameDirection.STOP
-    var velocity: Float = 0.3F
+    var velocity: Float = 0.2F
 
     fun changeDirection(newDirection: GameDirection) {
         if (!isMoving())
@@ -105,6 +104,9 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
                 canMoveLeft = false
                 return@forEach
             }
+        }
+        if (map.w.contains(fence)) {
+            canMoveLeft = false
         }
         if (x - 1 < 0) {
             canMoveLeft = false
@@ -171,7 +173,7 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
         return nextDirection
     }
 
-    protected fun clearWaitingFlg() {
+    private fun clearWaitingFlg() {
         isWaitingActionDown = false
         isWaitingActionLeft = false
         isWaitingActionRight = false
@@ -283,7 +285,7 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
             }
         }
         if (direction == GameDirection.STOP) {
-            playerCallback?.stopCallback()
+            playerCallback?.onStop()
         }
     }
 
@@ -372,7 +374,7 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
         return direction != GameDirection.STOP
     }
 
-    fun reload() {
+    open fun reload() {
         direction = GameDirection.STOP
         x = map.s.x
         y = map.s.y
@@ -386,5 +388,10 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
         whatNext(map, lastDirection)
     }
 
+    interface PlayerCallBack {
+        fun changeDirectionCallBack()
+        fun onStop()
+        fun onDied() {}
+    }
 }
 

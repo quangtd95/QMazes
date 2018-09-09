@@ -1,6 +1,5 @@
-package com.quangtd.qmazes.game;
+package com.quangtd.qmazes.game.gamemanager;
 
-import android.app.Activity;
 import android.content.Context;
 import android.media.AudioAttributes;
 import android.media.AudioManager;
@@ -43,6 +42,10 @@ public class SoundManager {
     private boolean loaded;
     private float volume;
     private int soundIdTouch;
+    private int soundIdBulletShoot;
+    private int soundIdBulletDestroy;
+    private int soundIdPlayerDestroy;
+
 
     public void setup(Context context) {
         // Đối tượng AudioManager sử dụng để điều chỉnh âm lượng.
@@ -81,6 +84,10 @@ public class SoundManager {
         });
         // Tải file nhạc tiếng vật thể bị phá hủy (destroy.war) vào SoundPool.
         soundIdTouch = this.soundPool.load(context, R.raw.toggle_switch, 1);
+        soundIdBulletDestroy = this.soundPool.load(context, R.raw.bullet_destroy, 1);
+        soundIdBulletShoot = this.soundPool.load(context, R.raw.bullet_shoot, 1);
+        soundIdPlayerDestroy = this.soundPool.load(context, R.raw.died, 1);
+
     }
 
     public void playTouchSound() {
@@ -89,6 +96,33 @@ public class SoundManager {
             float rightVolumn = volume;
             // Trả về ID của luồng mới phát ra.
             int streamId = this.soundPool.play(this.soundIdTouch, leftVolumn, rightVolumn, 1, 0, 1f);
+        }
+    }
+
+    public void playBulletShoot() {
+        if (loaded) {
+            float leftVolumn = volume;
+            float rightVolumn = volume;
+            // Trả về ID của luồng mới phát ra.
+            int streamId = this.soundPool.play(this.soundIdBulletShoot, leftVolumn, rightVolumn, 1, 0, 1f);
+        }
+    }
+
+    public void playBulletDestroy() {
+        if (loaded) {
+            float leftVolumn = volume;
+            float rightVolumn = volume;
+            // Trả về ID của luồng mới phát ra.
+            int streamId = this.soundPool.play(this.soundIdBulletDestroy, leftVolumn, rightVolumn, 1, 0, 1f);
+        }
+    }
+
+    public void playPlayerDied() {
+        if (loaded) {
+            float leftVolumn = volume;
+            float rightVolumn = volume;
+            // Trả về ID của luồng mới phát ra.
+            int streamId = this.soundPool.play(this.soundIdPlayerDestroy, leftVolumn, rightVolumn, 1, 0, 1f);
         }
     }
 }

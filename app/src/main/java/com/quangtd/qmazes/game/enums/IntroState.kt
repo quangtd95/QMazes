@@ -1,4 +1,4 @@
-package com.quangtd.qmazes.game
+package com.quangtd.qmazes.game.enums
 
 /**
  * Created by quang.td95@gmail.com
