@@ -104,7 +104,7 @@ class Bullet : Sprite() {
                     || (this.trap.v1 == it.d && this.trap.v2 == it.o)) {
 
             } else {
-                if (it.getRect().intersect(this.getRect())) {
+                if (this.getRect().intersect(it.getRect())) {
                     destroy()
                     return
                 }

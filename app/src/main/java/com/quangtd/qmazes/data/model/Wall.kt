@@ -1,9 +1,6 @@
 package com.quangtd.qmazes.data.model
 
-import android.graphics.Canvas
-import android.graphics.Paint
-import android.graphics.Rect
-import android.graphics.RectF
+import android.graphics.*
 
 /**
  * Created by quang.td95@gmail.com
@@ -23,7 +20,35 @@ class Wall(var o: Point = Point(0, 0), var d: Point = Point(0, 0)) : Sprite() {
 
     private var rect = RectF()
     fun getRect(): RectF {
-        rect.set(o.x * widthCell - widthWall / 2, o.y * widthCell - widthWall / 2, d.x * widthCell + widthWall / 2, d.y * widthCell + widthWall / 2)
+        if (o.x == d.x) {
+            if (o.y <= d.y) {
+                rect.set(
+                        o.x * widthCell - widthWall / 2,
+                        o.y * widthCell - widthWall / 2,
+                        d.x * widthCell + widthWall / 2,
+                        d.y * widthCell + widthWall / 2)
+            } else {
+                rect.set(
+                        d.x * widthCell - widthWall / 2,
+                        d.y * widthCell - widthWall / 2,
+                        o.x * widthCell + widthWall / 2,
+                        o.y * widthCell + widthWall / 2)
+            }
+        } else {
+            if (o.x <= d.x) {
+                rect.set(
+                        o.x * widthCell - widthWall / 2,
+                        o.y * widthCell - widthWall / 2,
+                        d.x * widthCell + widthWall / 2,
+                        d.y * widthCell + widthWall / 2)
+            } else {
+                rect.set(
+                        d.x * widthCell - widthWall / 2,
+                        d.y * widthCell - widthWall / 2,
+                        o.x * widthCell + widthWall / 2,
+                        o.y * widthCell + widthWall / 2)
+            }
+        }
         return rect
     }
 
