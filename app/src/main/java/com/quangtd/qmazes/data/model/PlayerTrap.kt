@@ -74,7 +74,7 @@ class PlayerTrap(map: MazeMap) : Player(map) {
     private fun collides(c1: PlayerTrap, c2: Bullet): Boolean {
         val centerPointPlayer = c1.getPlayerCenterPointF()
         val distance = Math.sqrt(Math.pow(((centerPointPlayer.x - c2.xFloat * widthCell).toDouble()), 2.0) + Math.pow((centerPointPlayer.y - c2.yFloat * widthCell).toDouble(), 2.0))
-        return (distance < c1.radius + c2.radius)
+        return (distance < (c1.radius + c2.radius) / 2)
     }
 
     override fun reload() {

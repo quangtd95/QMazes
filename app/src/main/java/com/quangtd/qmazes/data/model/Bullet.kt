@@ -54,8 +54,8 @@ class Bullet : Sprite() {
         }
         if (bulletState == SpriteState.NORMAL) {
             if (direction == GameDirection.RIGHT) {
-                if (xFloat * widthCell + radius >= map.c * widthCell) {
-                    xFloat = map.c.toFloat() - radius / widthCell
+                if (xFloat * widthCell >= map.c * widthCell) {
+                    xFloat = map.c.toFloat()  / widthCell
                     destroy()
                     return
                 }
@@ -114,7 +114,9 @@ class Bullet : Sprite() {
 
     private var rect = RectF()
     private fun getRect(): RectF {
+        radius /= 2
         rect.set(xFloat * widthCell - radius / 2, yFloat * widthCell - radius / 2, xFloat * widthCell + radius / 2, yFloat * widthCell + radius / 2)
+        radius *= 2
         return rect
     }
 
