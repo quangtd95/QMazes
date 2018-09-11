@@ -7,6 +7,7 @@ import com.quangtd.qmazes.data.model.Level
 import com.quangtd.qmazes.game.enums.GameKind
 import com.quangtd.qmazes.game.enums.GameState
 import com.quangtd.qmazes.game.enums.RenderState
+import com.quangtd.qmazes.game.gamemanager.EnemyGameManager
 import com.quangtd.qmazes.game.gamemanager.GameManager
 import com.quangtd.qmazes.game.gamemanager.MazeClassicManager
 import com.quangtd.qmazes.game.gamemanager.TrapsGameManager
@@ -54,6 +55,10 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
             GameKind.TRAP -> {
                 gameManager = TrapsGameManager(level.id, gameKind = GameKind.TRAP)
                 gamePanel = TrapsMazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
+            }
+            GameKind.ENEMIES -> {
+                gameManager = EnemyGameManager(level.id, gameKind = GameKind.ENEMIES)
+                gamePanel = EnemyMazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
             }
         }
 

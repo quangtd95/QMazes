@@ -1,5 +1,7 @@
 package com.quangtd.qmazes.game.enums
 
+import java.util.*
+
 /**
  * Created by quang.td95@gmail.com
  * on 9/2/2018.

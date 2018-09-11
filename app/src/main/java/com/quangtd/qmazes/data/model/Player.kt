@@ -5,6 +5,7 @@ import android.graphics.Color
 import android.graphics.Paint
 import com.quangtd.qmazes.game.enums.GameDirection
 import java.util.*
+import kotlin.collections.ArrayList
 import kotlin.math.sqrt
 
 /**
@@ -45,7 +46,7 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
     var footPrints = Stack<Point>().apply {
         add(Point(x, y))
     }
-    private var direction: GameDirection = GameDirection.STOP
+    var direction: GameDirection = GameDirection.STOP
     var lastDirection: GameDirection = GameDirection.STOP
     var velocity: Float = 0.2F
 
@@ -173,14 +174,14 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
         return nextDirection
     }
 
-    private fun clearWaitingFlg() {
+    open fun clearWaitingFlg() {
         isWaitingActionDown = false
         isWaitingActionLeft = false
         isWaitingActionRight = false
         isWaitingActionUp = false
     }
 
-    private fun updateFootPrints() {
+    open fun updateFootPrints() {
         if (footPrints.size >= 2) {
             val currentPointInStack = footPrints.pop()
             val lastPointInStack = footPrints.peek()
@@ -195,7 +196,7 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
 
     }
 
-    private fun moveUp() {
+    open fun moveUp() {
         y += 1
         direction = GameDirection.STOP
         xFloat = x.toFloat()
@@ -203,7 +204,7 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
         updateFootPrints()
     }
 
-    private fun moveDown() {
+    open fun moveDown() {
         y -= 1
         direction = GameDirection.STOP
         xFloat = x.toFloat()
@@ -211,7 +212,7 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
         updateFootPrints()
     }
 
-    private fun moveLeft() {
+    open fun moveLeft() {
         x -= 1
         direction = GameDirection.STOP
         xFloat = x.toFloat()
@@ -219,7 +220,7 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
         updateFootPrints()
     }
 
-    private fun moveRight() {
+    open fun moveRight() {
         x += 1
         direction = GameDirection.STOP
         xFloat = x.toFloat()
@@ -370,7 +371,7 @@ open class Player(var x: Int = 0, var y: Int = 0, var map: MazeMap) : Sprite() {
         }
     }
 
-    fun isMoving(): Boolean {
+    open fun isMoving(): Boolean {
         return direction != GameDirection.STOP
     }
 

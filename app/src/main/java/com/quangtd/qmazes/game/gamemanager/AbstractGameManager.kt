@@ -12,14 +12,13 @@ import java.io.File
  * on 9/2/2018.
  */
 abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, var level: Int = 1) : GameManager {
-    lateinit var gameState: GameState
+    private lateinit var gameState: GameState
     lateinit var soundManager: SoundManager
     lateinit var map: MazeMap
     lateinit var player: Player
     lateinit var door: Door
     var widthCell: Float = 0F
     var gameStateCallback: GameState.GameStateCallBack? = null
-    var renderCallback: RenderState.RenderCallback? = null
 
     override fun loadGame(context: Context) {
         forceChangeGameState(GameState.LOADING)
@@ -50,10 +49,24 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
             trap.map = map
             trap.widthCell = widthCell
         }
+        map.lstEnemy = map.e.map {
+            Enemy(it.x, it.y, map).apply {
+                widthCell = this@AbstractGameManager.widthCell
+            }
+        }
         player = when (gameKind) {
-            GameKind.ICE -> PlayerIceFloor(map)
-            GameKind.TRAP -> PlayerTrap(map)
-            else -> Player(map)
+            GameKind.ICE -> {
+                PlayerIceFloor(map)
+            }
+            GameKind.TRAP -> {
+                PlayerTrap(map)
+            }
+            GameKind.ENEMIES -> {
+                PlayerEnemy(map)
+            }
+            else -> {
+                Player(map)
+            }
         }
         player.widthCell = widthCell
         door = Door(map, player)
@@ -123,7 +136,6 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
 
     override fun reload() {
         player.reload()
-        renderCallback?.changeRenderState(RenderState.REQUEST_RENDER)
         forceChangeGameState(GameState.INTRO)
     }
 
@@ -132,7 +144,7 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
     override fun getDoorObject(): Door = door
 
     override fun bindRenderCallback(renderCallBack: RenderState.RenderCallback) {
-        this.renderCallback = renderCallBack
+
     }
 
     override fun bindGameStateCallback(gameStateCallBack: GameState.GameStateCallBack) {
