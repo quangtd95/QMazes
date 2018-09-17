@@ -72,8 +72,6 @@ class DarknessMazePanel(context: Context, gameManager: GameManager, viewHolder: 
         }
         drawBound(canvas)
 
-
-        renderCallback?.changeRenderState(RenderState.REQUEST_RENDER)
     }
 
     override fun drawGame(isBuffer: Boolean) {

@@ -8,31 +8,33 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/_40sdp"
-        android:layout_alignTop="@+id/hint"
+        android:layout_alignTop="@+id/next"
         android:layout_marginStart="17dp"
         android:layout_toEndOf="@+id/menu"
+        android:layout_toStartOf="@+id/reload"
         android:gravity="center"
         android:text="CLASSIC - 1"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/_20sdp" />
 
     <ImageButton
-        android:id="@+id/hint"
-        android:layout_width="@dimen/_40sdp"
-        android:layout_height="@dimen/_40sdp"
+        android:id="@+id/next"
+        android:layout_width="@dimen/_30sdp"
+        android:layout_height="@dimen/_30sdp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentTop="true"
         android:layout_margin="@dimen/_5sdp"
         android:background="@color/colorGrayTransparent"
-        android:src="@drawable/idea" />
+        android:scaleType="centerInside"
+        android:src="@drawable/next_button" />
 
     <ImageButton
-        android:id="@+id/reload"
+        android:id="@id/reload"
         android:layout_width="@dimen/_40sdp"
         android:layout_height="@dimen/_40sdp"
         android:layout_above="@+id/mazeView"
         android:layout_margin="@dimen/_5sdp"
-        android:layout_toStartOf="@+id/hint"
+        android:layout_toStartOf="@+id/next"
         android:background="@color/colorGrayTransparent"
         android:src="@drawable/circular_arrow" />
 
@@ -50,7 +52,7 @@
         android:id="@+id/mazeView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/hint"
+        android:layout_below="@id/next"
         android:layout_marginTop="@dimen/_10sdp" />
 
 </RelativeLayout>

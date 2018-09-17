@@ -45,6 +45,8 @@ public class SoundManager {
     private int soundIdBulletShoot;
     private int soundIdBulletDestroy;
     private int soundIdPlayerDestroy;
+    private int soundIdTimeUp;
+    private int soundIdClockTicking;
 
 
     public void setup(Context context) {
@@ -76,53 +78,67 @@ public class SoundManager {
         }
 
         // Sự kiện SoundPool đã tải lên bộ nhớ thành công.
-        this.soundPool.setOnLoadCompleteListener(new SoundPool.OnLoadCompleteListener() {
-            @Override
-            public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
-                loaded = true;
-            }
-        });
-        // Tải file nhạc tiếng vật thể bị phá hủy (destroy.war) vào SoundPool.
+        this.soundPool.setOnLoadCompleteListener((soundPool, sampleId, status) -> loaded = true);
+
         soundIdTouch = this.soundPool.load(context, R.raw.toggle_switch, 1);
         soundIdBulletDestroy = this.soundPool.load(context, R.raw.bullet_destroy, 1);
         soundIdBulletShoot = this.soundPool.load(context, R.raw.bullet_shoot, 1);
         soundIdPlayerDestroy = this.soundPool.load(context, R.raw.died, 1);
-
+        soundIdClockTicking = this.soundPool.load(context, R.raw.clock_ticking, 1);
+        soundIdTimeUp = this.soundPool.load(context, R.raw.time_up, 1);
     }
 
     public void playTouchSound() {
-        if (loaded) {
-            float leftVolumn = volume;
-            float rightVolumn = volume;
-            // Trả về ID của luồng mới phát ra.
-            int streamId = this.soundPool.play(this.soundIdTouch, leftVolumn, rightVolumn, 1, 0, 1f);
-        }
+        playSound(soundIdTouch);
     }
 
     public void playBulletShoot() {
-        if (loaded) {
-            float leftVolumn = volume;
-            float rightVolumn = volume;
-            // Trả về ID của luồng mới phát ra.
-            int streamId = this.soundPool.play(this.soundIdBulletShoot, leftVolumn, rightVolumn, 1, 0, 1f);
-        }
+        playSound(soundIdBulletShoot);
     }
 
     public void playBulletDestroy() {
-        if (loaded) {
-            float leftVolumn = volume;
-            float rightVolumn = volume;
-            // Trả về ID của luồng mới phát ra.
-            int streamId = this.soundPool.play(this.soundIdBulletDestroy, leftVolumn, rightVolumn, 1, 0, 1f);
-        }
+        playSound(soundIdBulletDestroy);
     }
 
     public void playPlayerDied() {
+        playSound(soundIdPlayerDestroy);
+    }
+
+    public void playSoundTimeUp() {
+        playSound(soundIdTimeUp);
+    }
+
+
+    public boolean playSoundClockTick() {
+        return playSound(soundIdClockTicking, true);
+    }
+
+    public boolean stopSoundClockTick() {
+        if (loaded) {
+            this.soundPool.stop(streamLoopId);
+            return true;
+        }
+        return false;
+    }
+
+    private boolean playSound(int soundId) {
+        return playSound(soundId, false);
+    }
+
+    private int streamLoopId;
+
+    private boolean playSound(int soundId, boolean loop) {
         if (loaded) {
             float leftVolumn = volume;
             float rightVolumn = volume;
             // Trả về ID của luồng mới phát ra.
-            int streamId = this.soundPool.play(this.soundIdPlayerDestroy, leftVolumn, rightVolumn, 1, 0, 1f);
+            int streamId = this.soundPool.play(soundId, leftVolumn, rightVolumn, 1, loop ? -1 : 0, 1f);
+            if (loop) {
+                streamLoopId = streamId;
+            }
+            return true;
+        } else {
+            return false;
         }
     }
 }

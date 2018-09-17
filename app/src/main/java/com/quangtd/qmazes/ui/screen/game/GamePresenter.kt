@@ -7,10 +7,7 @@ import com.quangtd.qmazes.data.model.Level
 import com.quangtd.qmazes.game.enums.GameKind
 import com.quangtd.qmazes.game.enums.GameState
 import com.quangtd.qmazes.game.enums.RenderState
-import com.quangtd.qmazes.game.gamemanager.EnemyGameManager
-import com.quangtd.qmazes.game.gamemanager.GameManager
-import com.quangtd.qmazes.game.gamemanager.MazeClassicManager
-import com.quangtd.qmazes.game.gamemanager.TrapsGameManager
+import com.quangtd.qmazes.game.gamemanager.*
 import com.quangtd.qmazes.game.gameview.*
 import com.quangtd.qmazes.game.thread.GameThread
 import com.quangtd.qmazes.util.DialogUtils
@@ -19,12 +16,13 @@ import com.quangtd.qmazes.ui.component.OnSwipeListener
 import com.quangtd.qmazes.util.SharedPreferencesUtils
 import com.quangtd.qstudio.mvpbase.BasePresenter
 import java.lang.reflect.Type
+import java.sql.Time
 
 /**
  * Created by quang.td95@gmail.com
  * on 9/1/2018.
  */
-class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, RenderState.RenderCallback {
+class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, RenderState.RenderCallback, TimeTrialGameManager.OnCountingTimeCallback {
 
     private var pref: SharedPreferencesUtils? = null
     private var gameManager: GameManager? = null
@@ -59,6 +57,11 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
             GameKind.ENEMIES -> {
                 gameManager = EnemyGameManager(level.id, gameKind = GameKind.ENEMIES)
                 gamePanel = EnemyMazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
+            }
+            GameKind.TIME_TRIAL -> {
+                gameManager = TimeTrialGameManager(level.id, gameKind = GameKind.TIME_TRIAL)
+                gamePanel = MazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
+                (gameManager as TimeTrialGameManager).onCountingTimeCallback = this
             }
         }
 
@@ -106,21 +109,32 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
 
     fun resumeGame() {
         if (setupGameFinish) {
+            if (level.gameKind == GameKind.TIME_TRIAL) {
+                (gameManager!! as TimeTrialGameManager).playBackgroundSound()
+            }
+            gameManager!!.resetStartGameTime()
             gameThread.renderFlg = true
         }
     }
 
     fun pauseGame() {
         if (setupGameFinish) {
+            if (level.gameKind == GameKind.TIME_TRIAL) {
+                (gameManager!! as TimeTrialGameManager).stopBackgroundSound()
+            }
             gameThread.renderFlg = false
         }
     }
 
     fun stopGame() {
+        if (level.gameKind == GameKind.TIME_TRIAL) {
+            (gameManager!! as TimeTrialGameManager).stopBackgroundSound()
+        }
         gameThread.stopFlg = true
     }
 
     fun reload() {
+        gameManager!!.resetStartGameTime()
         gameManager?.reload()
     }
 
@@ -152,6 +166,10 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
                 gamePanel!!.resetValue()
             }
             GameState.PLAYING -> {
+                if (level.gameKind == GameKind.TIME_TRIAL) {
+                    (gameManager!! as TimeTrialGameManager).playBackgroundSound()
+                }
+                gameManager!!.resetStartGameTime()
             }
             GameState.PAUSE -> {
             }
@@ -162,6 +180,30 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
                 view?.showWinGameAlert()
                 stopGame()
             }
+            GameState.LOSE_GAME -> {
+                view?.showLoseGameAlert()
+            }
         }
+    }
+
+    override fun onRemainingTime(secondRemaining: Int) {
+        view!!.updateRemainingTime(secondRemaining)
+    }
+
+    fun canNext(): Boolean {
+        val levelJSON = pref?.getString(level.gameKind.nameKind)
+        val lstLevel: ArrayList<Level>
+        if (levelJSON == null) {
+            return false
+        } else {
+            val listType: Type = object : TypeToken<ArrayList<Level>>() {}.type
+            lstLevel = Gson().fromJson(levelJSON, listType)
+            lstLevel.forEach {
+                if (it.id == (level.id + 1)) {
+                    return it.isUnLocked
+                }
+            }
+        }
+        return false
     }
 }

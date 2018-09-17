@@ -84,10 +84,14 @@ open class MazePanel(var context: Context, var gameManager: GameManager,
     }
 
     override fun draw() {
-        canvas = viewHolder.lockCanvas()
-        canvas.let {
-            drawEvery()
-            viewHolder.unlockCanvasAndPost(canvas)
+        try {
+            canvas = viewHolder.lockCanvas()
+            canvas.let {
+                drawEvery()
+                viewHolder.unlockCanvasAndPost(canvas)
+            }
+        } catch (e: Exception) {
+            e.printStackTrace()
         }
     }
 

@@ -42,7 +42,11 @@ open class EnemyGameManager(level: Int = 1, gameKind: GameKind = GameKind.ENEMIE
     }
 
     override fun reload() {
-        map.lstEnemy.forEach { e -> e.reload() }
+        map.lstEnemy.clear()
+        map.lstEnemy = ArrayList(map.e.map { Enemy(it.x, it.y, map) })
+        map.lstEnemy.forEach {
+            it.widthCell = this@EnemyGameManager.widthCell
+        }
         super.reload()
     }
 

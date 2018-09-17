@@ -3,6 +3,7 @@ package com.quangtd.qmazes.data.model
 import android.graphics.Canvas
 import android.graphics.Paint
 import com.quangtd.qmazes.game.enums.GameDirection
+import com.quangtd.qmazes.game.enums.SpriteState
 import java.util.*
 import kotlin.collections.ArrayList
 
@@ -10,8 +11,13 @@ class Enemy(x: Int = 0, y: Int = 0, map: MazeMap) : Player(x, y, map) {
     private var random = Random()
     var currentRotation: Float = 0F
     var velocityRotate: Float = 5F
+    var enemyState: SpriteState = SpriteState.NORMAL
+    var xDefault = 0
+    var yDefault = 0
 
     init {
+        xDefault = x
+        yDefault = y
         defaultValue()
     }
 
@@ -122,7 +128,7 @@ class Enemy(x: Int = 0, y: Int = 0, map: MazeMap) : Player(x, y, map) {
     }
 
     override fun draw(canvas: Canvas, paint: Paint) {
-        radius = widthCell / 3
+        radius = widthCell / 5
         if (!isMoving()) {
             canvas.drawCircle(widthCell * x + widthCell / 2, widthCell * y + widthCell / 2, radius, paint)
         } else {
@@ -139,6 +145,10 @@ class Enemy(x: Int = 0, y: Int = 0, map: MazeMap) : Player(x, y, map) {
     private fun defaultValue() {
         lastDirection = GameDirection.values()[random.nextInt(GameDirection.values().size)]
         velocity = 0.04F
+        velocityRotate = 0.5F
+        x = xDefault
+        y = yDefault
+        enemyState = SpriteState.NORMAL
     }
 
 }

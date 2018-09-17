@@ -11,7 +11,8 @@ enum class GameState {
     PLAYING,
     PAUSE,
     STOP,
-    WIN_GAME;
+    WIN_GAME,
+    LOSE_GAME;
 
     interface GameStateCallBack {
         fun onGameStateChangeCallback(gameState: GameState)

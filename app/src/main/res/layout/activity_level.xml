@@ -42,5 +42,6 @@
         android:gravity="center"
         android:text="quang.td95@gmail.com"
         android:textColor="@color/galleryOrange"
-        android:textSize="@dimen/_10sdp" />
+        android:textSize="@dimen/_10sdp"
+        android:visibility="invisible" />
 </RelativeLayout>

@@ -12,13 +12,18 @@ import java.io.File
  * on 9/2/2018.
  */
 abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, var level: Int = 1) : GameManager {
-    private lateinit var gameState: GameState
+    protected lateinit var gameState: GameState
     lateinit var soundManager: SoundManager
     lateinit var map: MazeMap
     lateinit var player: Player
     lateinit var door: Door
     var widthCell: Float = 0F
+    protected var startTime = 0L
     var gameStateCallback: GameState.GameStateCallBack? = null
+
+    override fun resetStartGameTime() {
+        startTime = System.currentTimeMillis()
+    }
 
     override fun loadGame(context: Context) {
         forceChangeGameState(GameState.LOADING)
@@ -49,11 +54,11 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
             trap.map = map
             trap.widthCell = widthCell
         }
-        map.lstEnemy = map.e.map {
+        map.lstEnemy = ArrayList(map.e.map {
             Enemy(it.x, it.y, map).apply {
                 widthCell = this@AbstractGameManager.widthCell
             }
-        }
+        })
         player = when (gameKind) {
             GameKind.ICE -> {
                 PlayerIceFloor(map)

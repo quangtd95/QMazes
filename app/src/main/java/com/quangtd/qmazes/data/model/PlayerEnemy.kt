@@ -12,7 +12,7 @@ import kotlin.math.sin
  * on 9/7/2018.
  */
 class PlayerEnemy(map: MazeMap) : Player(map) {
-    var playerState: SpriteState = SpriteState.NORMAL
+    private var playerState: SpriteState = SpriteState.NORMAL
     override fun update() {
         if (playerState == SpriteState.NORMAL) {
             super.update()
@@ -61,9 +61,8 @@ class PlayerEnemy(map: MazeMap) : Player(map) {
 
     private fun checkCollisionEnemies() {
         map.lstEnemy.forEach {
-            if (/*it.bullet.bulletState == SpriteState.NORMAL && */playerState == SpriteState.NORMAL) {
-                if (collides(this, it)) {
-//                    it.bullet.bulletState = SpriteState.DESTROYING
+            if (it.enemyState == SpriteState.NORMAL && playerState == SpriteState.NORMAL) {
+                if (collides(this@PlayerEnemy, it)) {
                     playerState = SpriteState.DESTROYING
                     playerCallback?.onDied()
                 }
@@ -74,7 +73,11 @@ class PlayerEnemy(map: MazeMap) : Player(map) {
 
     private fun collides(c1: Player, c2: Enemy): Boolean {
         val centerPointPlayer = c1.getPlayerCenterPointF()
-        val distance = Math.sqrt(Math.pow(((centerPointPlayer.x - c2.xFloat * widthCell).toDouble()), 2.0) + Math.pow((centerPointPlayer.y - c2.yFloat * widthCell).toDouble(), 2.0))
+        val centerPointEnemy = c2.getPlayerCenterPointF()
+        val distance = Math.sqrt(
+                Math.pow(((centerPointPlayer.x - centerPointEnemy.x).toDouble()), 2.0)
+                        + Math.pow((centerPointPlayer.y - centerPointEnemy.y).toDouble(), 2.0)
+        )
         return (distance < (c1.radius + c2.radius) / 2)
     }
 

@@ -9,6 +9,7 @@ import com.quangtd.qstudio.mvpbase.IBaseView
  */
 interface IGameView : IBaseView {
     fun getSurfaceHolder(): SurfaceHolder
-
     fun showWinGameAlert()
+    fun showLoseGameAlert()
+    fun updateRemainingTime(secondRemaining: Int)
 }

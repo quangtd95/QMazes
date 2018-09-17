@@ -23,5 +23,5 @@ data class MazeMap(
         var i: List<Ice>,
         var e: List<Point>,
         var t: List<Trap>,
-        var lstEnemy: List<Enemy>
+        var lstEnemy: ArrayList<Enemy>
 ) : BaseModel

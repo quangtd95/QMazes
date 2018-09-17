@@ -24,4 +24,5 @@ interface GameManager {
     fun forceChangeGameState(gameState: GameState)
     fun bindRenderCallback(renderCallBack: RenderState.RenderCallback)
     fun bindGameStateCallback(gameStateCallBack: GameState.GameStateCallBack)
+    fun resetStartGameTime()
 }

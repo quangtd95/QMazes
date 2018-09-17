@@ -9,5 +9,6 @@ enum class GameKind(var id: Int = 0, var nameKind: String, var nameAsset: String
     DARKNESS(1, "DARKNESS", "darkness", 100),
     ICE(2, "ICE", "ice_floor", 45),
     TRAP(3, "TRAP", "traps", 100),
-    ENEMIES(4, "ENEMIES", "enemies", 100)
+    ENEMIES(4, "ENEMIES", "enemies", 100),
+    TIME_TRIAL(5, "TIME_TRIAL", "time_trial", 100)
 }

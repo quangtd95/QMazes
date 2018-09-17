@@ -53,10 +53,10 @@ class LevelActivity : BaseActivity<ILevelView, LevelPresenter>(), LevelAdapter.O
     }
 
     override fun onClickLevel(level: Level) {
-//        if (level.isUnLocked) {
-        GameActivity.startNewGame(this, level)
-        finish()
-//        }
+        if (level.isUnLocked) {
+            GameActivity.startNewGame(this, level)
+            finish()
+        }
     }
 
     companion object {

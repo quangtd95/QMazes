@@ -95,13 +95,19 @@ public class DialogUtils {
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
         alert.setTitle(title);
         alert.setMessage(message);
+        alert.setCancelable(true);
         alert.setPositiveButton("Ok", (dialog, which) -> {
             if (null != callback) {
                 callback.onClickPositive();
             }
             dialog.dismiss();
         });
-        alert.setCancelable(false);
+        alert.setOnDismissListener(dialog -> {
+            if (null != callback) {
+                callback.onClickPositive();
+            }
+            dialog.dismiss();
+        });
         alert.show();
     }
 
@@ -121,6 +127,7 @@ public class DialogUtils {
             alert.setTitle(title);
         }
         alert.setMessage(message);
+        alert.setCancelable(false);
         alert.setPositiveButton(textPositive, (dialog, which) -> {
             if (null != callback) {
                 callback.onClickPositiveButton();

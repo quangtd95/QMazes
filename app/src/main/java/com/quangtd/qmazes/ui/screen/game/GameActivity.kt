@@ -6,10 +6,12 @@ import android.os.Bundle
 import android.support.v4.view.GestureDetectorCompat
 import android.view.MotionEvent
 import android.view.SurfaceHolder
+import android.view.View
 import com.quangtd.qmazes.R
 import com.quangtd.qmazes.common.CommonConstants
 import com.quangtd.qmazes.data.model.Category
 import com.quangtd.qmazes.data.model.Level
+import com.quangtd.qmazes.game.enums.GameKind
 import com.quangtd.qmazes.mvpbase.BaseActivity
 import com.quangtd.qmazes.util.DialogUtils
 import com.quangtd.qmazes.ui.screen.level.LevelActivity
@@ -44,7 +46,9 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
     }
 
     private fun initViews() {
-        tvTitle.text = "${level!!.gameKind.nameKind} + ${level!!.id}"
+        if (level!!.gameKind != GameKind.TIME_TRIAL) {
+            tvTitle.text = "${level!!.gameKind.nameKind} + ${level!!.id}"
+        }
     }
 
 
@@ -73,6 +77,7 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
         menu.setOnClickListener { onBackPressed() }
     }
 
+
     override fun getSurfaceHolder(): SurfaceHolder {
         return mazeView.getSurfaceHolder()
     }
@@ -92,6 +97,14 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
         LogUtils.e("surfaceCreated")
         if (!isPause) {
             getPresenter(this@GameActivity).setUpGame(level!!)
+            if (getPresenter(this).canNext()) {
+                next.visibility = View.VISIBLE
+                next.setOnClickListener {
+                    moveNextLevel()
+                }
+            } else {
+                next.visibility = View.INVISIBLE
+            }
         } else {
             getPresenter(this).resumeGame()
         }
@@ -112,15 +125,34 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
     override fun showWinGameAlert() {
         runOnUiThread {
             uiChangeListener()
+            next.visibility = View.VISIBLE
+            next.setOnClickListener {
+                moveNextLevel()
+            }
             DialogUtils.createAlertDialog(this, "YOU WIN! level ${level!!.id}", CommonConstants.CONGRATE_MESSAGE[Random().nextInt(CommonConstants.CONGRATE_MESSAGE.size)]) {
-                level!!.apply {
-                    id += 1
-                }
-                startNewGame(this@GameActivity, level!!)
-                getPresenter(this).stopGame()
-                finish()
+                moveNextLevel()
             }
         }
+    }
+
+    override fun showLoseGameAlert() {
+        runOnUiThread {
+            getPresenter(this).pauseGame()
+            uiChangeListener()
+            DialogUtils.createAlertDialog(this, "TIME UP", "") {
+                getPresenter(this@GameActivity).resumeGame()
+                getPresenter(this@GameActivity).reload()
+            }
+        }
+    }
+
+    private fun moveNextLevel() {
+        level!!.apply {
+            id += 1
+        }
+        startNewGame(this@GameActivity, level!!)
+        getPresenter(this).stopGame()
+        finish()
     }
 
     companion object {
@@ -140,5 +172,14 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
         finish()
     }
 
+    override fun updateRemainingTime(secondRemaining: Int) {
+        runOnUiThread {
+            tvTitle.text = secondRemaining.toString()
+        }
+    }
 
+    override fun onDestroy() {
+        getPresenter(this).stopGame()
+        super.onDestroy()
+    }
 }

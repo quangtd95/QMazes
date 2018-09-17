@@ -3,7 +3,6 @@ package com.quangtd.qmazes.data.model
 import android.graphics.Canvas
 import android.graphics.Paint
 import com.quangtd.qmazes.game.enums.SpriteState
-import com.quangtd.qmazes.util.LogUtils
 import kotlin.math.sin
 
 
