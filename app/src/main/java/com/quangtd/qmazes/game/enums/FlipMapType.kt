@@ -1,5 +1,7 @@
 package com.quangtd.qmazes.game.enums
 
+import java.util.*
+
 /**
  * Created by quang.td95@gmail.com
  * on 9/5/2018.
@@ -12,8 +14,8 @@ enum class FlipMapType {
 
     companion object {
         fun getRandomType(): FlipMapType {
-            return FLIP_H
-//            return values()[Random().nextInt(values().size)]
+//            return FLIP_H
+            return values()[Random().nextInt(values().size)]
         }
     }
 }

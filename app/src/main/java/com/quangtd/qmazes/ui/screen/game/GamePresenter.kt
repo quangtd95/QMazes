@@ -59,7 +59,7 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
             }
             GameKind.TIME_TRIAL -> {
                 gameManager = TimeTrialGameManager(level.id, gameKind = GameKind.TIME_TRIAL)
-                gamePanel = ClassicMazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
+                gamePanel = TimeTrialMazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
                 (gameManager as TimeTrialGameManager).onCountingTimeCallback = this
             }
         }
@@ -135,6 +135,16 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
     fun reload() {
         gameManager!!.resetStartGameTime()
         gameManager?.reload()
+        if (level.gameKind == GameKind.TIME_TRIAL) {
+            (gamePanel!! as TimeTrialMazePanel).reloadUI(getContext()!!, object : ClassicMazePanel.LoadGameUICallBack {
+                override fun onLoadedUI() {
+                    gameManager!!.forceChangeGameState(GameState.INTRO)
+                }
+            })
+            (gameManager!! as TimeTrialGameManager).reload(getContext()!!)
+        } else {
+            gameManager?.reload()
+        }
     }
 
     override fun changeRenderState(renderState: RenderState) {

@@ -32,8 +32,8 @@ open class TrapsGameManager(level: Int = 1, gameKind: GameKind = GameKind.TRAP) 
         soundManager.playPlayerDied()
     }
 
-    override fun loadGame(context: Context) {
-        super.loadGame(context)
+    override fun loadGame(context: Context, randomMap: Boolean) {
+        super.loadGame(context, randomMap)
         player.playerCallback = this
         map.t.forEach { trap ->
             trap.bulletCallBack = this

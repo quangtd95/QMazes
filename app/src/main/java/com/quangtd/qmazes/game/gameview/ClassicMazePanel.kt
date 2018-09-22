@@ -23,7 +23,7 @@ open class ClassicMazePanel(var context: Context, var gameManager: GameManager,
     protected var widthCell: Float = 0F
     protected var widthWall: Float = 0F
     protected var gameState = GameState.LOADING
-    private var tempBackgroundBitmap: Bitmap? = null
+    protected var tempBackgroundBitmap: Bitmap? = null
     lateinit var map: MazeMap
     lateinit var player: Player
     lateinit var door: Door
@@ -193,6 +193,7 @@ open class ClassicMazePanel(var context: Context, var gameManager: GameManager,
             loadedGameUICallBack?.onLoadedUI()
         }.start()
     }
+
 
     open fun drawIce(tempCanvasBackground: Canvas) {}
 

@@ -95,14 +95,8 @@ public class DialogUtils {
         AlertDialog.Builder alert = new AlertDialog.Builder(context);
         alert.setTitle(title);
         alert.setMessage(message);
-        alert.setCancelable(true);
+        alert.setCancelable(false);
         alert.setPositiveButton("Ok", (dialog, which) -> {
-            if (null != callback) {
-                callback.onClickPositive();
-            }
-            dialog.dismiss();
-        });
-        alert.setOnDismissListener(dialog -> {
             if (null != callback) {
                 callback.onClickPositive();
             }

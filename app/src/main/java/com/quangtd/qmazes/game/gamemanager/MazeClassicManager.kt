@@ -19,8 +19,8 @@ open class MazeClassicManager(level: Int = 1, gameKind: GameKind = GameKind.CLAS
     override fun onStop() {
     }
 
-    override fun loadGame(context: Context) {
-        super.loadGame(context)
+    override fun loadGame(context: Context,randomMap : Boolean) {
+        super.loadGame(context,randomMap)
         player.playerCallback = this
     }
 

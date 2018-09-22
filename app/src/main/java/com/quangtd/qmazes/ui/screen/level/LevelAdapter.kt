@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.quangtd.qmazes.R
 import com.quangtd.qmazes.data.model.Level
+import com.quangtd.qmazes.game.enums.GameKind
 import com.quangtd.qmazes.mvpbase.BaseAdapter
 import com.quangtd.qmazes.mvpbase.BaseViewHolder
 import kotlinx.android.synthetic.main.item_level.view.*
@@ -29,7 +30,16 @@ class LevelAdapter(private var mContext: Context) : BaseAdapter<Level, LevelAdap
                 itemView.tvLevel.visibility = View.VISIBLE
                 itemView.tvLevel.text = t.id.toString()
                 if (t.isComplete) {
-                    itemView.rlLevel.background = mContext.resources.getDrawable(R.drawable.round_corner_yellow_bg)
+                    when (t.gameKind){
+                        GameKind.ICE->itemView.rlLevel.background = mContext.resources.getDrawable(R.drawable.round_corner_ice_bg)
+                        GameKind.CLASSIC->itemView.rlLevel.background = mContext.resources.getDrawable(R.drawable.round_corner_classic_bg)
+                        GameKind.DARKNESS->itemView.rlLevel.background = mContext.resources.getDrawable(R.drawable.round_corner_dark_bg)
+                        GameKind.TRAP->itemView.rlLevel.background = mContext.resources.getDrawable(R.drawable.round_corner_trap_bg)
+                        GameKind.TIME_TRIAL->itemView.rlLevel.background = mContext.resources.getDrawable(R.drawable.round_corner_time_bg)
+
+                        else->itemView.rlLevel.background = mContext.resources.getDrawable(R.drawable.round_corner_yellow_bg)
+                    }
+
                 } else {
                     itemView.rlLevel.background = mContext.resources.getDrawable(R.drawable.round_corner_white_bg)
                 }

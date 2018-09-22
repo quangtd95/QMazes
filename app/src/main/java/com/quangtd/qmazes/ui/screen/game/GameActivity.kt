@@ -17,6 +17,7 @@ import com.quangtd.qmazes.util.DialogUtils
 import com.quangtd.qmazes.ui.screen.level.LevelActivity
 import com.quangtd.qmazes.util.LogUtils
 import com.quangtd.qmazes.ui.component.OnSwipeListener
+import com.quangtd.qmazes.util.ColorUtils
 import kotlinx.android.synthetic.main.activity_game.*
 import java.util.*
 
@@ -48,6 +49,8 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
     private fun initViews() {
         if (level!!.gameKind != GameKind.TIME_TRIAL) {
             tvTitle.text = "${level!!.gameKind.nameKind} + ${level!!.id}"
+        } else {
+            tvTitle.setTextColor(ColorUtils.colorTimeTrial)
         }
     }
 
@@ -150,7 +153,7 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
         level!!.apply {
             id += 1
         }
-        startNewGame(this@GameActivity, level!!)
+        GameActivity.startNewGame(this@GameActivity, level!!)
         getPresenter(this).stopGame()
         finish()
     }
@@ -170,6 +173,7 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
     override fun onBackPressed() {
         LevelActivity.startLevelActivity(this, Category(level!!.gameKind.id, level!!.gameKind))
         finish()
+        super.onBackPressed()
     }
 
     override fun updateRemainingTime(secondRemaining: Int) {

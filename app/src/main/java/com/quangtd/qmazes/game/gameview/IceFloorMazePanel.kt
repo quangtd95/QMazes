@@ -23,6 +23,7 @@ class IceFloorMazePanel(context: Context, gameManager: GameManager, viewHolder: 
     private var currentIntroIce = 0F
     private var velocityDrawIceBlock = 2F
 
+
     override fun drawIntro() {
         super.drawGame(false)
         super.drawIntroBackground()
@@ -64,7 +65,15 @@ class IceFloorMazePanel(context: Context, gameManager: GameManager, viewHolder: 
     override fun loadGameUI(loadedGameUICallBack: LoadGameUICallBack?) {
         super.loadGameUI(null)
         widthWall = widthCell / 7
+        setupColor()
         super.loadBufferAsync(loadedGameUICallBack)
+    }
+
+    private fun setupColor() {
+        colorPlayer = Color.rgb(13,71,161)
+        colorBackground = Color.rgb(38,50,56)
+        colorWall = Color.WHITE
+        colorBound = colorWall
     }
 
     override fun resetValue() {

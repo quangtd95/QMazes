@@ -13,7 +13,6 @@ import com.quangtd.qmazes.game.enums.RenderState
  * on 9/2/2018.
  */
 interface GameManager {
-    fun loadGame(context: Context)
     fun reload()
     fun getMazeMap(): MazeMap
     fun getPlayerObject(): Player
@@ -25,4 +24,5 @@ interface GameManager {
     fun bindRenderCallback(renderCallBack: RenderState.RenderCallback)
     fun bindGameStateCallback(gameStateCallBack: GameState.GameStateCallBack)
     fun resetStartGameTime()
+    fun loadGame(context: Context, randomMap: Boolean = false)
 }

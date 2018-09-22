@@ -6,6 +6,7 @@ import com.quangtd.qmazes.data.model.*
 import com.quangtd.qmazes.game.enums.*
 import com.quangtd.qmazes.util.ScreenUtils
 import java.io.File
+import java.util.*
 
 /**
  * Created by quang.td95@gmail.com
@@ -25,17 +26,18 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
         startTime = System.currentTimeMillis()
     }
 
-    override fun loadGame(context: Context) {
+    override fun loadGame(context: Context, randomMap: Boolean) {
         forceChangeGameState(GameState.LOADING)
         //load image
         BitmapManager.initResource(context)
         //load sound
         soundManager = SoundManager.getInstance()
         //load map
-        map = loadMap(context, gameKind, level)
+        map = loadMap(context, gameKind, level, randomMap)
         initGame(context)
         forceChangeGameState(GameState.LOADED)
     }
+
 
     open fun initGame(context: Context) {
         widthCell = (ScreenUtils.getWidthScreen(context).toFloat() / map.c)
@@ -86,36 +88,41 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
         inputStream.close()
         val map = Gson().fromJson(String(buffer), MazeMap::class.java)
         if (randomMap) {
-            when (FlipMapType.getRandomType()) {
-                FlipMapType.FLIP_H -> flipHMap(map)
-                FlipMapType.FLIP_V -> flipVMap(map)
-                FlipMapType.FLIP_2_W -> flip2WMap(map)
-                FlipMapType.NONE -> {
-                    //do nothing
-                }
-            }
+            randomMap(map)
         }
         return map
+    }
+
+    protected fun randomMap(map: MazeMap) {
+        when (FlipMapType.getRandomType()) {
+            FlipMapType.FLIP_H -> flipHMap(map)
+            FlipMapType.FLIP_V -> flipVMap(map)
+            FlipMapType.FLIP_2_W -> flip2WMap(map)
+            FlipMapType.NONE -> {
+                //do nothing
+            }
+        }
     }
 
     private fun flipHMap(map: MazeMap) {
         map.s.x = map.c - 1 - map.s.x
         map.f.x = map.c - 1 - map.f.x
         map.w.forEach {
-            it.o.x = map.c - 1 - it.o.x
-            it.d.x = map.c - 1 - it.d.x
+            it.o.x = map.c - it.o.x
+            it.d.x = map.c - it.d.x
         }
         map.i.forEach {
             it.x = map.c - (it.x - 0.5F) + 0.5F
         }
+
     }
 
     private fun flipVMap(map: MazeMap) {
         map.s.y = map.r - 1 - map.s.y
         map.f.y = map.r - 1 - map.f.y
         map.w.forEach {
-            it.o.y = map.r - 1 - it.o.y
-            it.d.y = map.r - 1 - it.d.y
+            it.o.y = map.r - it.o.y
+            it.d.y = map.r - it.d.y
         }
         map.i.forEach {
             it.y = map.r - (it.y - 0.5F) + 0.5F
@@ -128,10 +135,10 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
         map.s.y = map.r - 1 - map.s.y
         map.f.y = map.r - 1 - map.f.y
         map.w.forEach {
-            it.o.x = map.c - 1 - it.o.x
-            it.d.x = map.c - 1 - it.d.x
-            it.o.y = map.r - 1 - it.o.y
-            it.d.y = map.r - 1 - it.d.y
+            it.o.x = map.c - it.o.x
+            it.d.x = map.c - it.d.x
+            it.o.y = map.r - it.o.y
+            it.d.y = map.r - it.d.y
         }
         map.i.forEach {
             it.x = map.c - (it.x - 0.5F) + 0.5F

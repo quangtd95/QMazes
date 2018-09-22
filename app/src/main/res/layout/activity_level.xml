@@ -20,7 +20,6 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_margin="@dimen/_10sdp"
-        android:text="CLASSIC"
         android:textColor="@android:color/holo_orange_dark"
         android:textSize="@dimen/_30sdp" />
 

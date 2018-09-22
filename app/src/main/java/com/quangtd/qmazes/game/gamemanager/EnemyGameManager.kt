@@ -24,8 +24,8 @@ open class EnemyGameManager(level: Int = 1, gameKind: GameKind = GameKind.ENEMIE
         soundManager.playPlayerDied()
     }
 
-    override fun loadGame(context: Context) {
-        super.loadGame(context)
+    override fun loadGame(context: Context, randomMap: Boolean) {
+        super.loadGame(context, randomMap)
         player.playerCallback = this
     }
 

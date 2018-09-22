@@ -2,6 +2,7 @@ package com.quangtd.qmazes.ui.screen.level
 
 import android.content.Context
 import android.content.Intent
+import android.graphics.Color
 import android.os.Bundle
 import com.quangtd.qmazes.R
 import com.quangtd.qmazes.data.model.Category
@@ -9,6 +10,7 @@ import com.quangtd.qmazes.data.model.Level
 import com.quangtd.qmazes.game.enums.GameKind
 import com.quangtd.qmazes.mvpbase.BaseActivity
 import com.quangtd.qmazes.ui.screen.game.GameActivity
+import com.quangtd.qmazes.util.ColorUtils
 import com.quangtd.qmazes.util.RecyclerViewUtils
 import com.quangtd.qstudio.mvpbase.IAdapterView
 import kotlinx.android.synthetic.main.activity_level.*
@@ -50,6 +52,15 @@ class LevelActivity : BaseActivity<ILevelView, LevelPresenter>(), LevelAdapter.O
         getPresenter(this).adapter = levelAdapter
         rvLevel.adapter = levelAdapter
         tvTitle.text = gameKind!!.nameKind
+        when (gameKind!!) {
+            GameKind.ICE -> tvTitle.setTextColor(ColorUtils.colorIce)
+            GameKind.DARKNESS -> tvTitle.setTextColor(ColorUtils.colorDark)
+            GameKind.CLASSIC -> tvTitle.setTextColor(ColorUtils.colorGreen)
+            GameKind.TRAP -> tvTitle.setTextColor(ColorUtils.colorTrap)
+            GameKind.TIME_TRIAL->tvTitle.setTextColor(ColorUtils.colorTimeTrial)
+            else -> tvTitle.setTextColor(ColorUtils.colorOrange)
+        }
+
     }
 
     override fun onClickLevel(level: Level) {
