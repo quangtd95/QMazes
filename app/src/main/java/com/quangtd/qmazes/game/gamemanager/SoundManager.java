@@ -22,13 +22,13 @@ public class SoundManager {
 
     }
 
-    public static synchronized SoundManager getInstance(Context context) {
+    public static synchronized SoundManager getInstance() {
         if (instance == null) {
             instance = new SoundManager();
         }
-        if (!instance.loaded) {
-            instance.setup(context);
-        }
+//        if (!instance.loaded) {
+//            instance.setup(context);
+//        }
         return instance;
     }
 
@@ -39,7 +39,7 @@ public class SoundManager {
     private AudioManager audioManager;
     // Chọn loại luồng âm thanh để phát nhạc.
     private static final int streamType = AudioManager.STREAM_MUSIC;
-    private boolean loaded;
+    private volatile boolean loaded;
     private float volume;
     private int soundIdTouch;
     private int soundIdBulletShoot;
@@ -47,7 +47,6 @@ public class SoundManager {
     private int soundIdPlayerDestroy;
     private int soundIdTimeUp;
     private int soundIdClockTicking;
-
 
     public void setup(Context context) {
         // Đối tượng AudioManager sử dụng để điều chỉnh âm lượng.

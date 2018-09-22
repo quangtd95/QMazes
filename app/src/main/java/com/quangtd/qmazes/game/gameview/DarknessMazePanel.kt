@@ -6,7 +6,6 @@ import android.graphics.*
 import android.graphics.Bitmap
 import com.quangtd.qmazes.game.enums.GameState
 import com.quangtd.qmazes.game.enums.IntroState
-import com.quangtd.qmazes.game.enums.RenderState
 import com.quangtd.qmazes.game.gamemanager.GameManager
 
 
@@ -14,7 +13,7 @@ import com.quangtd.qmazes.game.gamemanager.GameManager
  * Created by quang.td95@gmail.com
  * on 9/3/2018.
  */
-class DarknessMazePanel(context: Context, gameManager: GameManager, viewHolder: SurfaceHolder) : MazePanel(context, gameManager, viewHolder) {
+class DarknessMazePanel(context: Context, gameManager: GameManager, viewHolder: SurfaceHolder) : ClassicMazePanel(context, gameManager, viewHolder) {
     private var introState = IntroState.STATE_1
     private var darknessPaint = Paint(Paint.ANTI_ALIAS_FLAG)
     private var tempPaint = Paint(Paint.FILTER_BITMAP_FLAG).apply {
@@ -28,6 +27,7 @@ class DarknessMazePanel(context: Context, gameManager: GameManager, viewHolder: 
     private var radiusLightPlayerIntro: Float = 0F
     private var velocityIntro: Float = 25F
     private var defaultRadiusLightDoor = 0F
+
     private fun defaultRadiusLightPlayer(): Float {
         return widthCell * map.c / 8
 //        return player.radius * 3
@@ -40,7 +40,15 @@ class DarknessMazePanel(context: Context, gameManager: GameManager, viewHolder: 
         defaultRadiusLightDoor = widthCell * map.c / 8
         radiusLightPlayerIntro = widthCell * map.c
         radiusLightDoorIntro = widthCell * map.c
+        setupColor()
         loadBufferAsync(loadedGameUICallBack)
+    }
+
+    private fun setupColor() {
+        colorBound = Color.rgb(176,190,197)
+        colorWall = colorBound
+        colorBackground = Color.rgb(55,71,79)
+        colorPlayer = Color.rgb(144,164,174)
     }
 
     override fun drawIntro() {

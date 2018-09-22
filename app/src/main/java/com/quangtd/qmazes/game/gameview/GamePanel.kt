@@ -10,8 +10,8 @@ import com.quangtd.qmazes.game.enums.RenderState
 interface GamePanel {
     fun draw()
     fun setState(gameState: GameState)
-    fun loadGameUI(loadedGameUICallBack: MazePanel.LoadGameUICallBack?)
-    fun loadBufferAsync(loadedGameUICallBack: MazePanel.LoadGameUICallBack?)
+    fun loadGameUI(loadedGameUICallBack: ClassicMazePanel.LoadGameUICallBack?)
+    fun loadBufferAsync(loadedGameUICallBack: ClassicMazePanel.LoadGameUICallBack?)
     fun bindRenderCalBack(renderCallBack: RenderState.RenderCallback)
     fun resetValue()
 }

@@ -16,7 +16,6 @@ import com.quangtd.qmazes.ui.component.OnSwipeListener
 import com.quangtd.qmazes.util.SharedPreferencesUtils
 import com.quangtd.qstudio.mvpbase.BasePresenter
 import java.lang.reflect.Type
-import java.sql.Time
 
 /**
  * Created by quang.td95@gmail.com
@@ -40,7 +39,7 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
         when (level.gameKind) {
             GameKind.CLASSIC -> {
                 gameManager = MazeClassicManager(level.id, gameKind = GameKind.CLASSIC)
-                gamePanel = MazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
+                gamePanel = ClassicMazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
             }
             GameKind.DARKNESS -> {
                 gameManager = MazeClassicManager(level.id, gameKind = GameKind.DARKNESS)
@@ -60,7 +59,7 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
             }
             GameKind.TIME_TRIAL -> {
                 gameManager = TimeTrialGameManager(level.id, gameKind = GameKind.TIME_TRIAL)
-                gamePanel = MazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
+                gamePanel = ClassicMazePanel(getContext()!!, gameManager!!, view!!.getSurfaceHolder())
                 (gameManager as TimeTrialGameManager).onCountingTimeCallback = this
             }
         }
@@ -156,7 +155,7 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
             GameState.LOADING -> {
             }
             GameState.LOADED -> {
-                gamePanel!!.loadGameUI(object : MazePanel.LoadGameUICallBack {
+                gamePanel!!.loadGameUI(object : ClassicMazePanel.LoadGameUICallBack {
                     override fun onLoadedUI() {
                         gameManager!!.forceChangeGameState(GameState.INTRO)
                     }

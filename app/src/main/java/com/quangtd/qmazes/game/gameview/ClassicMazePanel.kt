@@ -15,8 +15,8 @@ import com.quangtd.qmazes.util.ScreenUtils
  * Created by quang.td95@gmail.com
  * on 9/2/2018.
  */
-open class MazePanel(var context: Context, var gameManager: GameManager,
-                     var viewHolder: SurfaceHolder) : GamePanel {
+open class ClassicMazePanel(var context: Context, var gameManager: GameManager,
+                            var viewHolder: SurfaceHolder) : GamePanel {
 
     protected var renderCallback: RenderState.RenderCallback? = null
     protected var widthScreen: Int = 0
@@ -46,10 +46,27 @@ open class MazePanel(var context: Context, var gameManager: GameManager,
 
 
     protected lateinit var canvas: Canvas
-    protected var colorBound: Int = Color.rgb(255, 136, 0)
+    protected var colorBound: Int = Color.WHITE
+    set(value) {
+        paintBound.color = value
+        field = value
+    }
     protected var colorDoor: Int = Color.rgb(75, 174, 74)
-    protected var colorWall: Int = Color.rgb(255, 136, 0)
+        set(value) {
+            paintDoor.color = value
+            field = value
+        }
+    protected var colorWall: Int = Color.WHITE
+        set(value) {
+            paintWall.color = value
+            field = value
+        }
     protected var colorPlayer: Int = Color.rgb(74, 174, 74)
+        set(value) {
+            paintPlayer.color = value
+            field = value
+        }
+    protected var colorBackground : Int = Color.rgb(43, 34, 34)
 
     private var paintWall = Paint().apply {
         color = colorWall
@@ -180,7 +197,7 @@ open class MazePanel(var context: Context, var gameManager: GameManager,
     open fun drawIce(tempCanvasBackground: Canvas) {}
 
     open fun drawBackground(canvas: Canvas) {
-        canvas.drawColor(Color.rgb(43, 34, 34))
+        canvas.drawColor(colorBackground)
     }
 
     open fun drawBound(canvas: Canvas) {

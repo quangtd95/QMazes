@@ -30,7 +30,7 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
         //load image
         BitmapManager.initResource(context)
         //load sound
-        soundManager = SoundManager.getInstance(context)
+        soundManager = SoundManager.getInstance()
         //load map
         map = loadMap(context, gameKind, level)
         initGame(context)

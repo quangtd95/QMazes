@@ -11,7 +11,7 @@ import com.quangtd.qmazes.game.gamemanager.GameManager
  * Created by quang.td95@gmail.com
  * on 9/7/2018.
  */
-class TrapsMazePanel(context: Context, gameManager: GameManager, viewHolder: SurfaceHolder) : MazePanel(context, gameManager, viewHolder) {
+class TrapsMazePanel(context: Context, gameManager: GameManager, viewHolder: SurfaceHolder) : ClassicMazePanel(context, gameManager, viewHolder) {
     var introState: IntroState = IntroState.STATE_1
     var colorTrap: Int = Color.BLUE
 
