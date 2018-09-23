@@ -47,10 +47,10 @@ open class ClassicMazePanel(var context: Context, var gameManager: GameManager,
 
     protected lateinit var canvas: Canvas
     protected var colorBound: Int = Color.WHITE
-    set(value) {
-        paintBound.color = value
-        field = value
-    }
+        set(value) {
+            paintBound.color = value
+            field = value
+        }
     protected var colorDoor: Int = Color.rgb(75, 174, 74)
         set(value) {
             paintDoor.color = value
@@ -66,7 +66,7 @@ open class ClassicMazePanel(var context: Context, var gameManager: GameManager,
             paintPlayer.color = value
             field = value
         }
-    protected var colorBackground : Int = Color.rgb(43, 34, 34)
+    protected var colorBackground: Int = Color.rgb(43, 34, 34)
 
     private var paintWall = Paint().apply {
         color = colorWall
@@ -223,6 +223,10 @@ open class ClassicMazePanel(var context: Context, var gameManager: GameManager,
 
     interface LoadGameUICallBack {
         fun onLoadedUI()
+    }
+
+    override fun getHeight(): Int {
+        return (map.r * widthCell).toInt()
     }
 
 }

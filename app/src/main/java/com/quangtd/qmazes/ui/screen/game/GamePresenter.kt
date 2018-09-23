@@ -74,6 +74,7 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
         gameThread.start()
         setupGameFinish = true
         pref = SharedPreferencesUtils.getInstance(getContext())
+        getIView()?.setHeightGame(gamePanel!!.getHeight())
     }
 
     fun move(direction: OnSwipeListener.Direction) {

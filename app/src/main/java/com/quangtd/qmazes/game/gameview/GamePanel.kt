@@ -14,4 +14,5 @@ interface GamePanel {
     fun loadBufferAsync(loadedGameUICallBack: ClassicMazePanel.LoadGameUICallBack?)
     fun bindRenderCalBack(renderCallBack: RenderState.RenderCallback)
     fun resetValue()
+    fun getHeight(): Int
 }

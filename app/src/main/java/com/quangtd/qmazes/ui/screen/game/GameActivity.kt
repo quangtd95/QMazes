@@ -7,6 +7,8 @@ import android.support.v4.view.GestureDetectorCompat
 import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.View
+import android.view.ViewGroup
+import android.widget.RelativeLayout
 import com.quangtd.qmazes.R
 import com.quangtd.qmazes.common.CommonConstants
 import com.quangtd.qmazes.data.model.Category
@@ -18,8 +20,10 @@ import com.quangtd.qmazes.ui.screen.level.LevelActivity
 import com.quangtd.qmazes.util.LogUtils
 import com.quangtd.qmazes.ui.component.OnSwipeListener
 import com.quangtd.qmazes.util.ColorUtils
+import com.quangtd.qmazes.util.ScreenUtils
 import kotlinx.android.synthetic.main.activity_game.*
 import java.util.*
+import android.view.ViewGroup.MarginLayoutParams
 
 
 /**
@@ -195,5 +199,19 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
     override fun onDestroy() {
         getPresenter(this).stopGame()
         super.onDestroy()
+    }
+
+    override fun getSurfaceHeight(): Int {
+        return ScreenUtils.getHeightScreen(this) - tvTitle.height - ScreenUtils.convertDpToPixel(this, 17)
+    }
+
+    override fun setHeightGame(height: Int) {
+        val sfHeight = getSurfaceHeight()
+        val margin = (sfHeight - height) / 2
+        val params = mazeView.layoutParams as MarginLayoutParams
+        params.topMargin = margin
+        params.bottomMargin = margin
+        mazeView.layoutParams = params
+        mazeView.invalidate()
     }
 }
