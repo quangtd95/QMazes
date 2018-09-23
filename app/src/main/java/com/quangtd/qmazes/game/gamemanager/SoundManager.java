@@ -17,6 +17,20 @@ import static android.content.Context.AUDIO_SERVICE;
 
 public class SoundManager {
     private static SoundManager instance;
+    private boolean isMute = false;
+
+    /**
+     * @return mute or not
+     */
+    public boolean toggleMute() {
+        isMute = !isMute;
+        if (isMute) {
+            stopSoundClockTick();
+        } else {
+
+        }
+        return isMute;
+    }
 
     private SoundManager() {
 
@@ -120,13 +134,14 @@ public class SoundManager {
         return false;
     }
 
-    private boolean playSound(int soundId) {
-        return playSound(soundId, false);
+    private void playSound(int soundId) {
+        playSound(soundId, false);
     }
 
     private int streamLoopId;
 
     private boolean playSound(int soundId, boolean loop) {
+        if (isMute) return false;
         if (loaded) {
             float leftVolumn = volume;
             float rightVolumn = volume;

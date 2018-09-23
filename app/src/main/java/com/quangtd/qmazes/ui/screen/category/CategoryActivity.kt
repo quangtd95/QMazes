@@ -32,7 +32,7 @@ class CategoryActivity : BaseActivity<ICategoryView, CategoryPresenter>(), Categ
     }
 
     private fun initActions() {
-
+        menu.setOnClickListener { finish() }
     }
 
     private fun initViews() {

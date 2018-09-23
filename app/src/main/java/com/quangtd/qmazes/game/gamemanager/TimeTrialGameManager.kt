@@ -44,7 +44,7 @@ open class TimeTrialGameManager(level: Int = 1, gameKind: GameKind = GameKind.CL
     override fun loadGame(context: Context, randomMap: Boolean) {
         super.loadGame(context, true)
         player.playerCallback = this
-        totalTime = (map.r.toFloat() / 9 * 12 * 1000).toLong()
+        totalTime = (map.r.toFloat() / 9 * 9 * 1000).toLong()
     }
 
     fun reload(context: Context) {

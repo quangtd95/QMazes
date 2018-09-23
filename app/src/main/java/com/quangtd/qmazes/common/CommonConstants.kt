@@ -10,6 +10,7 @@ class CommonConstants {
         const val DEFAULT_FONT = "SerreriaSobria.otf"
         const val INTENT_LEVEL = "level"
         const val COMPLETE_PRX = "complete_%s"
+        const val MUTE = "mute"
         val CONGRATE_MESSAGE = arrayOf(
                 "Trông bạn tuyệt lắm!",
                 "bạn lúc nào cũng thật xinh đẹp!",
