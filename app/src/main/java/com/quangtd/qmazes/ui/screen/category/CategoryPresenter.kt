@@ -1,5 +1,6 @@
 package com.quangtd.qmazes.ui.screen.category
 
+import com.quangtd.qmazes.common.CommonConstants
 import com.quangtd.qmazes.data.model.Category
 import com.quangtd.qmazes.game.enums.GameKind
 import com.quangtd.qmazes.util.SharedPreferencesUtils
@@ -20,7 +21,11 @@ class CategoryPresenter : BasePresenter<ICategoryView>() {
     }
 
     fun loadData() {
-        val lstCategory = GameKind.values().map { Category(it.id, it) }
+
+        val lstCategory = GameKind.values().map {
+            val numberOfComplete = pref?.getInt(String.format(CommonConstants.COMPLETE_PRX, it.nameKind))!!
+            Category(it.id, it, if (numberOfComplete == -1) 0 else numberOfComplete)
+        }
         adapter?.setItems(lstCategory)
     }
 }

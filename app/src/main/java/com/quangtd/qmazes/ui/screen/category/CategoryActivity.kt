@@ -47,6 +47,7 @@ class CategoryActivity : BaseActivity<ICategoryView, CategoryPresenter>(), Categ
 
     override fun onClickCategory(category: Category) {
         LevelActivity.startLevelActivity(this, category)
+        finish()
     }
 
     companion object {

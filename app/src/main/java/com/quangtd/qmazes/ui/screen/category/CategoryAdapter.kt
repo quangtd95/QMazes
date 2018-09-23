@@ -10,6 +10,7 @@ import com.quangtd.qmazes.game.enums.GameKind
 import com.quangtd.qmazes.mvpbase.BaseAdapter
 import com.quangtd.qmazes.mvpbase.BaseViewHolder
 import com.quangtd.qmazes.util.ColorUtils
+import com.quangtd.qmazes.util.LogUtils
 import kotlinx.android.synthetic.main.activity_level.*
 import kotlinx.android.synthetic.main.item_category.view.*
 
@@ -37,6 +38,7 @@ class CategoryAdapter(private var mContext: Context) : BaseAdapter<Category, Cat
 
             }
             itemView.tvCategory.text = t.gameKind.nameKind
+            itemView.tvCompleteRate.text = "${(t.numberComplete.toFloat() / t.gameKind.totalLevel * 100).toInt()} %"
             itemView.rlLevel.setOnClickListener {
                 onCategoryClickListener?.onClickCategory(t)
             }

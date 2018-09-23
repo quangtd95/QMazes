@@ -88,6 +88,7 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
 
     private fun updateData() {
         val levelJSON = pref?.getString(level.gameKind.nameKind)
+        var numberComplete: Int = 0
         var lstLevel = ArrayList<Level>()
         if (levelJSON == null) {
             DialogUtils.createAlertDialog(getContext(), "ERROR", "cannot write data, you can play game normally but your data will be lost after exit!")
@@ -102,8 +103,12 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
                     isUnLocked = true
                 }
             }
+            lstLevel.forEach {
+                if (it.isComplete) numberComplete++
+            }
         }
         pref?.setString(level.gameKind.nameKind, Gson().toJson(lstLevel))
+        pref?.setInt("complete_" + level.gameKind.nameKind, numberComplete)
     }
 
     fun resumeGame() {
@@ -215,4 +220,5 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
         }
         return false
     }
+
 }

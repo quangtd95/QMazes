@@ -9,6 +9,7 @@ class CommonConstants {
         const val FPS = 60L
         const val DEFAULT_FONT = "SerreriaSobria.otf"
         const val INTENT_LEVEL = "level"
+        const val COMPLETE_PRX = "complete_%s"
         val CONGRATE_MESSAGE = arrayOf(
                 "Trông bạn tuyệt lắm!",
                 "bạn lúc nào cũng thật xinh đẹp!",

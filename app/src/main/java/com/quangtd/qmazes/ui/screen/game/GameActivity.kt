@@ -171,9 +171,19 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
     }
 
     override fun onBackPressed() {
-        LevelActivity.startLevelActivity(this, Category(level!!.gameKind.id, level!!.gameKind))
-        finish()
-        super.onBackPressed()
+        DialogUtils.createConfirmDialog(this@GameActivity, "Are your sure to exit game?",
+                "process of current game will be lost!",
+                object : DialogUtils.DialogConfirmCallback {
+                    override fun onClickPositiveButton() {
+                        LevelActivity.startLevelActivity(this@GameActivity, Category(level!!.gameKind.id, level!!.gameKind))
+                        finish()
+                    }
+
+                    override fun onClickNegativeButton() {
+                        //do-nothing
+                    }
+                })
+
     }
 
     override fun updateRemainingTime(secondRemaining: Int) {

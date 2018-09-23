@@ -9,6 +9,7 @@ import com.quangtd.qmazes.data.model.Category
 import com.quangtd.qmazes.data.model.Level
 import com.quangtd.qmazes.game.enums.GameKind
 import com.quangtd.qmazes.mvpbase.BaseActivity
+import com.quangtd.qmazes.ui.screen.category.CategoryActivity
 import com.quangtd.qmazes.ui.screen.game.GameActivity
 import com.quangtd.qmazes.util.ColorUtils
 import com.quangtd.qmazes.util.RecyclerViewUtils
@@ -41,7 +42,15 @@ class LevelActivity : BaseActivity<ILevelView, LevelPresenter>(), LevelAdapter.O
     }
 
     private fun initActions() {
-        menu.setOnClickListener { finish() }
+        menu.setOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    override fun onBackPressed() {
+        CategoryActivity.startCategoryActivity(this@LevelActivity)
+        finish()
+        super.onBackPressed()
     }
 
     private fun initViews() {
@@ -57,7 +66,7 @@ class LevelActivity : BaseActivity<ILevelView, LevelPresenter>(), LevelAdapter.O
             GameKind.DARKNESS -> tvTitle.setTextColor(ColorUtils.colorDark)
             GameKind.CLASSIC -> tvTitle.setTextColor(ColorUtils.colorGreen)
             GameKind.TRAP -> tvTitle.setTextColor(ColorUtils.colorTrap)
-            GameKind.TIME_TRIAL->tvTitle.setTextColor(ColorUtils.colorTimeTrial)
+            GameKind.TIME_TRIAL -> tvTitle.setTextColor(ColorUtils.colorTimeTrial)
             else -> tvTitle.setTextColor(ColorUtils.colorOrange)
         }
 
