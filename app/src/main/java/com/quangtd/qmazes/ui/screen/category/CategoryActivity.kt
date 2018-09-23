@@ -42,7 +42,7 @@ class CategoryActivity : BaseActivity<ICategoryView, CategoryPresenter>(), Categ
         mCategoryAdapter = categoryAdapter
         getPresenter(this).adapter = categoryAdapter
         rvLevel.adapter = categoryAdapter
-        tvTitle.text = "Category"
+        tvTitle.text = resources.getString(R.string.app_name)
     }
 
     override fun onClickCategory(category: Category) {
