@@ -1,7 +1,7 @@
-package com.quangtd.qstudio.mvpbase
+package com.quangtd.qmazes.mvpbase
 
 import android.content.Context
-import io.reactivex.disposables.Disposable
+import com.quangtd.qstudio.mvpbase.IBaseView
 
 /**
  * Created by QuangTD
@@ -9,7 +9,6 @@ import io.reactivex.disposables.Disposable
  */
 abstract class BasePresenter<V : IBaseView> {
     private var iView: V? = null
-    protected var mListDisposable = ArrayList<Disposable?>()
 
     open fun getIView(): V? {
         return iView
@@ -24,14 +23,7 @@ abstract class BasePresenter<V : IBaseView> {
     }
 
     open fun onDestroy() {
-        for (disposable in mListDisposable) {
-            disposable?.let {
-                if (!disposable.isDisposed) {
-                    disposable.dispose()
-                }
-            }
 
-        }
     }
 
     fun getContext(): Context? {

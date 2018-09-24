@@ -22,6 +22,7 @@ class Trap : Sprite() {
 
     var direction: GameDirection = GameDirection.STOP
 
+    @SerializedName("f")
     var f: Float = 0F
 
     var s: Float = 0F
@@ -29,8 +30,10 @@ class Trap : Sprite() {
     @SerializedName("ds")
     var duration: Float = 0F
 
+    @SerializedName("v1")
     var v1: Point = Point(0, 0)
 
+    @SerializedName("v2")
     var v2: Point = Point(0, 0)
 
     private var path: Path = Path()

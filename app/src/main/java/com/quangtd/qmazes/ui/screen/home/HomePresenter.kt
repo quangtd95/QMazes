@@ -1,6 +1,6 @@
 package com.quangtd.qmazes.ui.screen.home
 
-import com.quangtd.qstudio.mvpbase.BasePresenter
+import com.quangtd.qmazes.mvpbase.BasePresenter
 
 /**
  * Created by quang.td95@gmail.com

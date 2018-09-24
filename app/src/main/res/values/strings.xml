@@ -1,5 +1,9 @@
 <resources>
-    <string name="app_name">Q-Maze</string>
+    <string name="app_name">Q-Mazes</string>
     <string name="btn_cancel">Cancel</string>
     <string name="btn_ok">Ok</string>
+    <string name="admod_id">ca-app-pub-9769888232013412~2534468422</string>
+    <string name="admod_unit_id">ca-app-pub-9769888232013412/5052820553</string>
+    <string name="admod_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="reload_current_game">reload current game?</string>
 </resources>

@@ -3,6 +3,7 @@ package com.quangtd.qmazes.ui.screen.category
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import com.crashlytics.android.Crashlytics
 import com.quangtd.qmazes.R
 import com.quangtd.qmazes.data.model.Category
 import com.quangtd.qmazes.mvpbase.BaseActivity

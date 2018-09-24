@@ -1,10 +1,7 @@
 package com.quangtd.qmazes.game.gameview
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.Paint
 import android.view.SurfaceHolder
-import com.quangtd.qmazes.game.enums.IntroState
 import com.quangtd.qmazes.game.gamemanager.GameManager
 import com.quangtd.qmazes.util.ColorUtils
 
@@ -22,7 +19,7 @@ class TimeTrialMazePanel(context: Context, gameManager: GameManager, viewHolder:
         loadBufferAsync(loadedGameUICallBack)
     }
 
-    fun reloadUI(context: Context, loadedGameUICallBack: LoadGameUICallBack?) {
+    fun reloadUI(loadedGameUICallBack: LoadGameUICallBack?) {
         tempBackgroundBitmap?.recycle()
         tempBackgroundBitmap = null
         loadGameUI(loadedGameUICallBack)

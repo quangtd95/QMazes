@@ -1,12 +1,17 @@
 package com.quangtd.qmazes.data.model
 
 import android.graphics.*
+import com.google.gson.annotations.SerializedName
 
 /**
  * Created by quang.td95@gmail.com
  * on 9/1/2018.
  */
-class Wall(var o: Point = Point(0, 0), var d: Point = Point(0, 0)) : Sprite() {
+class Wall(
+        @SerializedName("o")
+        var o: Point = Point(0, 0),
+        @SerializedName("d")
+        var d: Point = Point(0, 0)) : Sprite() {
     var widthCell: Float = 0F
     var widthWall: Float = 0F
 

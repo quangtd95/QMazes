@@ -9,19 +9,28 @@ import com.quangtd.qmazes.mvpbase.BaseModel
  */
 data class MazeMap(
         // number of r
+        @SerializedName("r")
         var r: Int,
         // number of c
+        @SerializedName("c")
         var c: Int,
         //start
+        @SerializedName("s")
         var s: Point,
         //finish
+        @SerializedName("f")
         var f: Point,
         //hint
+        @SerializedName("h")
         var h: List<Point>,
         //wall
+        @SerializedName("w")
         var w: List<Wall>,
+        @SerializedName("i")
         var i: List<Ice>,
+        @SerializedName("e")
         var e: List<Point>,
+        @SerializedName("t")
         var t: List<Trap>,
-        var lstEnemy: ArrayList<Enemy>
+        @Transient var lstEnemy: ArrayList<Enemy>
 ) : BaseModel

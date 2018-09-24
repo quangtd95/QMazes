@@ -13,10 +13,10 @@ import android.view.SurfaceView
 class MazeView(context: Context?, attrs: AttributeSet?) : SurfaceView(context, attrs) {
 
     init {
-        init(context)
+        init()
     }
 
-    fun init(context: Context?) {
+    private fun init() {
 
     }
 

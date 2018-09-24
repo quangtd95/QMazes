@@ -12,7 +12,7 @@
         android:layout_alignParentTop="true"
         android:layout_margin="@dimen/_5sdp"
         android:background="@color/colorGrayTransparent"
-        android:src="@drawable/brickwall" />
+        android:src="@mipmap/logo" />
 
     <com.quangtd.qmazes.ui.component.FontTextView
         android:id="@+id/tvTitle"

@@ -11,7 +11,6 @@ import android.support.v4.app.Fragment
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import android.view.WindowManager
-import com.quangtd.qstudio.mvpbase.BasePresenter
 import com.quangtd.qstudio.mvpbase.IBaseView
 import java.lang.reflect.ParameterizedType
 

@@ -1,0 +1,117 @@
+{
+  "project_info": {
+    "project_number": "354266212652",
+    "firebase_url": "https://test-firebase-86ef9.firebaseio.com",
+    "project_id": "test-firebase-86ef9",
+    "storage_bucket": "test-firebase-86ef9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354266212652:android:039d2798a870884b",
+        "android_client_info": {
+          "package_name": "com.quangtd.qmazes"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354266212652-dcp3buvd4e79ec6qvg9j8mvgpiq238nc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3pSG7aTj4MGIKuyH1O5AADgP4Zl36-1c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354266212652:android:3ce4169253ca1032",
+        "android_client_info": {
+          "package_name": "com.quangtd.videomaker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354266212652-kfrtsu7i366toe4qh3m9gb3n3h73d2co.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.quangtd.videomaker",
+            "certificate_hash": "820335feeae8d0f18ef39cf7e073edb2aae6a871"
+          }
+        },
+        {
+          "client_id": "354266212652-dcp3buvd4e79ec6qvg9j8mvgpiq238nc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3pSG7aTj4MGIKuyH1O5AADgP4Zl36-1c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "354266212652-dcp3buvd4e79ec6qvg9j8mvgpiq238nc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:354266212652:android:f9617858cb586acf",
+        "android_client_info": {
+          "package_name": "td.quang.vnplayer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "354266212652-dcp3buvd4e79ec6qvg9j8mvgpiq238nc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD3pSG7aTj4MGIKuyH1O5AADgP4Zl36-1c"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

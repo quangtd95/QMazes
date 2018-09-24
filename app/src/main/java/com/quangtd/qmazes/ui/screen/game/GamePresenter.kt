@@ -14,7 +14,7 @@ import com.quangtd.qmazes.util.DialogUtils
 import com.quangtd.qmazes.util.LogUtils
 import com.quangtd.qmazes.ui.component.OnSwipeListener
 import com.quangtd.qmazes.util.SharedPreferencesUtils
-import com.quangtd.qstudio.mvpbase.BasePresenter
+import com.quangtd.qmazes.mvpbase.BasePresenter
 import java.lang.reflect.Type
 
 /**
@@ -92,7 +92,7 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
         var numberComplete: Int = 0
         var lstLevel = ArrayList<Level>()
         if (levelJSON == null) {
-            DialogUtils.createAlertDialog(getContext(), "ERROR", "cannot write data, you can play game normally but your data will be lost after exit!")
+            DialogUtils.showError(getContext(), "cannot write data, you can play game normally but your data will be lost after exit!")
         } else {
             val listType: Type = object : TypeToken<ArrayList<Level>>() {}.type
             lstLevel = Gson().fromJson(levelJSON, listType)
@@ -142,7 +142,7 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
         gameManager!!.resetStartGameTime()
         gameManager?.reload()
         if (level.gameKind == GameKind.TIME_TRIAL) {
-            (gamePanel!! as TimeTrialMazePanel).reloadUI(getContext()!!, object : ClassicMazePanel.LoadGameUICallBack {
+            (gamePanel!! as TimeTrialMazePanel).reloadUI(object : ClassicMazePanel.LoadGameUICallBack {
                 override fun onLoadedUI() {
                     gameManager!!.forceChangeGameState(GameState.INTRO)
                 }

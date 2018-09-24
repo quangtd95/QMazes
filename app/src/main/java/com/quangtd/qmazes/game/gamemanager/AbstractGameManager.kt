@@ -92,9 +92,10 @@ abstract class AbstractGameManager(var gameKind: GameKind = GameKind.CLASSIC, va
         }
         return map
     }
+    private var count = 0
 
     protected fun randomMap(map: MazeMap) {
-        when (FlipMapType.getRandomType()) {
+        when (FlipMapType.values()[(++count) %FlipMapType.values().size]) {
             FlipMapType.FLIP_H -> flipHMap(map)
             FlipMapType.FLIP_V -> flipVMap(map)
             FlipMapType.FLIP_2_W -> flip2WMap(map)

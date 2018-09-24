@@ -122,6 +122,8 @@ open class ClassicMazePanel(var context: Context, var gameManager: GameManager,
             GameState.LOADING, GameState.PLAYING, GameState.PAUSE, GameState.STOP, GameState.WIN_GAME -> {
                 drawGame()
             }
+            GameState.LOSE_GAME -> {
+            }
         }
     }
 
