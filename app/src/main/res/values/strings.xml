@@ -1,9 +1,21 @@
 <resources>
-    <string name="app_name">Q-Mazes</string>
+    <string name="app_name" translatable="false">Q-Mazes</string>
     <string name="btn_cancel">Cancel</string>
-    <string name="btn_ok">Ok</string>
-    <string name="admod_id">ca-app-pub-9769888232013412~2534468422</string>
-    <string name="admod_unit_id">ca-app-pub-9769888232013412/5052820553</string>
-    <string name="admod_unit_id_test">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="btn_ok">OK</string>
+    <string name="admod_id" translatable="false">ca-app-pub-9769888232013412~2534468422</string>
+    <string name="admod_unit_id" translatable="false">ca-app-pub-9769888232013412/5052820553</string>
+    <string name="admod_unit_id_test" translatable="false">ca-app-pub-3940256099942544/6300978111</string>
     <string name="reload_current_game">reload current game?</string>
+    <string name="exit_game_confirm">are you sure to exit game ? process of current game will be lost!</string>
+    <string name="OK">OK</string>
+    <string name="cancel">Cancel</string>
+    <string name="next">next</string>
+    <string name="unlock_new_level">Congratulation, You\'ve unlock new level!</string>
+    <string name="play_now">Play now?</string>
+    <string name="unlock_new_category">Congratulation, You\'ve unlock new category!</string>
+    <string name="reload">reload ?</string>
+    <string name="time_up">TIME UP</string>
+    <string name="try_again">try again</string>
+    <string name="lock_level_warning">This level is locked. Please complete the previous level</string>
+    <string name="you_win">YOU WIN! level</string>
 </resources>

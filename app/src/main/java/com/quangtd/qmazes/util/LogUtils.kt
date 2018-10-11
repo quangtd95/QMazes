@@ -9,7 +9,7 @@ import android.util.Log
 class LogUtils {
 
     companion object {
-        private var isDebugMode = true
+        private var isDebugMode = false
         private var TAG = "TAGG"
 
         fun getMode(): Boolean {

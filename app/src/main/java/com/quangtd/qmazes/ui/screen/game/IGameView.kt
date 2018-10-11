@@ -14,4 +14,5 @@ interface IGameView : IBaseView {
     fun updateRemainingTime(secondRemaining: Int)
     fun getSurfaceHeight(): Int
     fun setHeightGame(height: Int)
+    fun showNewCategoryAlert()
 }

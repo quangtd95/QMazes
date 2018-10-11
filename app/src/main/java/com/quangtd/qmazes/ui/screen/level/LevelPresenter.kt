@@ -24,7 +24,7 @@ class LevelPresenter : BasePresenter<ILevelView>() {
 
     fun loadData(gameKind: GameKind) {
         val levelJSON = pref?.getString(gameKind.nameKind)
-        var numberComplete: Int = 0
+        var numberComplete = 0
         var lstLevel = ArrayList<Level>()
         if (levelJSON == null) {
             for (i in 1..gameKind.totalLevel) {
@@ -42,5 +42,44 @@ class LevelPresenter : BasePresenter<ILevelView>() {
         }
         pref?.setInt(String.format(CommonConstants.COMPLETE_PRX, gameKind.nameKind), numberComplete)
         adapter?.setItems(lstLevel)
+    }
+
+    fun unlockLevel(mSelectedLevel: Level?) {
+        mSelectedLevel?.let { level ->
+            val gameKind = level.gameKind
+            val levelJSON = pref?.getString(gameKind.nameKind)
+            var numberComplete = 0
+            var lstLevel = ArrayList<Level>()
+            if (levelJSON == null) {
+                for (i in 1..gameKind.totalLevel) {
+                    lstLevel.add(Level(i, gameKind = gameKind))
+                }
+                lstLevel[0].isUnLocked = true
+                lstLevel[level.id - 1].isUnLocked = true
+                val levelString = Gson().toJson(lstLevel)
+                pref?.setString(gameKind.nameKind, levelString)
+            } else {
+                val listType: Type = object : TypeToken<ArrayList<Level>>() {}.type
+                lstLevel = Gson().fromJson(levelJSON, listType)
+                lstLevel[level.id - 1].isUnLocked = true
+                lstLevel.forEach {
+                    if (it.isComplete) numberComplete++
+                }
+            }
+            pref?.setInt(String.format(CommonConstants.COMPLETE_PRX, gameKind.nameKind), numberComplete)
+            pref?.setString(level.gameKind.nameKind, Gson().toJson(lstLevel))
+            adapter?.setItems(lstLevel)
+        }
+
+    }
+
+    fun canRequestUnlock(level: Level): Boolean {
+        with(level) {
+            val lstLevel: ArrayList<Level>
+            val levelJSON = pref?.getString(gameKind.nameKind)
+            val listType: Type = object : TypeToken<ArrayList<Level>>() {}.type
+            lstLevel = Gson().fromJson(levelJSON, listType)
+            return (lstLevel[level.id - 2].isUnLocked || lstLevel[level.id - 2].isComplete)
+        }
     }
 }

@@ -2,6 +2,8 @@ package com.quangtd.qmazes.ui.screen.game
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
+import com.quangtd.qmazes.common.CommonConstants
+import com.quangtd.qmazes.data.model.Category
 import com.quangtd.qmazes.game.enums.GameDirection
 import com.quangtd.qmazes.data.model.Level
 import com.quangtd.qmazes.game.enums.GameKind
@@ -89,7 +91,7 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
 
     private fun updateData() {
         val levelJSON = pref?.getString(level.gameKind.nameKind)
-        var numberComplete: Int = 0
+        var numberComplete = 0
         var lstLevel = ArrayList<Level>()
         if (levelJSON == null) {
             DialogUtils.showError(getContext(), "cannot write data, you can play game normally but your data will be lost after exit!")
@@ -106,6 +108,9 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
             }
             lstLevel.forEach {
                 if (it.isComplete) numberComplete++
+            }
+            if (numberComplete == (level.gameKind.totalLevel * 0.1f).toInt()) {
+                view?.showNewCategoryAlert()
             }
         }
         pref?.setString(level.gameKind.nameKind, Gson().toJson(lstLevel))
@@ -191,8 +196,8 @@ class GamePresenter : BasePresenter<IGameView>(), GameState.GameStateCallBack, R
             GameState.STOP -> {
             }
             GameState.WIN_GAME -> {
-                updateData()
                 view?.showWinGameAlert()
+                updateData()
                 stopGame()
             }
             GameState.LOSE_GAME -> {

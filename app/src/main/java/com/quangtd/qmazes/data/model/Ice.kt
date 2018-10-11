@@ -2,6 +2,7 @@ package com.quangtd.qmazes.data.model
 
 import android.graphics.Canvas
 import android.graphics.Paint
+import android.os.Build
 import com.google.gson.annotations.SerializedName
 
 /**
@@ -28,7 +29,12 @@ class Ice(
     }
 
     fun draw(canvas: Canvas, paint: Paint, radius: Float) {
-        canvas.drawRoundRect(x * widthCell - radius, y * widthCell - radius,
-                x * widthCell + radius, y * widthCell + radius, 5F, 5F, paint)
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            canvas.drawRoundRect(x * widthCell - radius, y * widthCell - radius,
+                    x * widthCell + radius, y * widthCell + radius, 5F, 5F, paint)
+        } else {
+            canvas.drawRect(x * widthCell - radius, y * widthCell - radius,
+                    x * widthCell + radius, y * widthCell + radius, paint)
+        }
     }
 }

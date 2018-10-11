@@ -3,11 +3,11 @@ package com.quangtd.qmazes.ui.screen.category
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import com.crashlytics.android.Crashlytics
 import com.quangtd.qmazes.R
 import com.quangtd.qmazes.data.model.Category
 import com.quangtd.qmazes.mvpbase.BaseActivity
 import com.quangtd.qmazes.ui.screen.level.LevelActivity
+import com.quangtd.qmazes.util.DialogUtils
 import com.quangtd.qmazes.util.RecyclerViewUtils
 import com.quangtd.qstudio.mvpbase.IAdapterView
 import kotlinx.android.synthetic.main.activity_level.*
@@ -47,8 +47,13 @@ class CategoryActivity : BaseActivity<ICategoryView, CategoryPresenter>(), Categ
     }
 
     override fun onClickCategory(category: Category) {
-        LevelActivity.startLevelActivity(this, category)
-        finish()
+        if (category.isUnlock) {
+            LevelActivity.startLevelActivity(this, category)
+            finish()
+        } else {
+            uiChangeListener()
+            DialogUtils.showUnlock(this)
+        }
     }
 
     companion object {

@@ -175,11 +175,6 @@ open class BaseActivity<V : IBaseView, out P : BasePresenter<V>> : AppCompatActi
         }
     }
 
-    override fun finish() {
-        super.finish()
-//        overridePendingTransition(R.anim.view_enter_from_left, R.anim.view_exit_to_right)
-    }
-
     override fun onDestroy() {
         presenter?.onDestroy()
         super.onDestroy()

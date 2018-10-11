@@ -8,10 +8,10 @@ import android.view.MotionEvent
 import android.view.SurfaceHolder
 import android.view.View
 import android.view.ViewGroup.MarginLayoutParams
-import com.google.android.gms.ads.AdListener
-import com.google.android.gms.ads.AdRequest
-import com.google.android.gms.ads.AdSize
-import com.google.android.gms.ads.MobileAds
+//import com.google.android.gms.ads.AdListener
+//import com.google.android.gms.ads.AdRequest
+//import com.google.android.gms.ads.AdSize
+//import com.google.android.gms.ads.MobileAds
 import com.quangtd.qmazes.R
 import com.quangtd.qmazes.common.CommonConstants
 import com.quangtd.qmazes.data.model.Category
@@ -70,6 +70,7 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
         })
         reload.setOnClickListener {
             getPresenter(this@GameActivity).pauseGame()
+            uiChangeListener()
             DialogUtils.showReload(this,
                     {
                         getPresenter(this@GameActivity).resumeGame()
@@ -79,37 +80,37 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
             )
         }
         menu.setOnClickListener { onBackPressed() }
-        adView.adListener = object : AdListener() {
-            override fun onAdLoaded() {
-                // Code to be executed when an ad finishes loading.
-                LogUtils.e("onAdLoaded")
-            }
-
-            override fun onAdFailedToLoad(errorCode: Int) {
-                // Code to be executed when an ad request fails.
-                LogUtils.e("onAdFailedToLoad $errorCode")
-
-            }
-
-            override fun onAdOpened() {
-                // Code to be executed when an ad opens an overlay that
-                // covers the screen.
-                LogUtils.e("onAdOpened")
-
-            }
-
-            override fun onAdLeftApplication() {
-                // Code to be executed when the user has left the app.\
-                LogUtils.e("onAdLeftApplication")
-
-            }
-
-            override fun onAdClosed() {
-                // Code to be executed when when the user is about to return
-                // to the app after tapping on an ad.
-                LogUtils.e("onAdClosed")
-            }
-        }
+//        adView.adListener = object : AdListener() {
+//            override fun onAdLoaded() {
+//                // Code to be executed when an ad finishes loading.
+//                LogUtils.e("onAdLoaded")
+//            }
+//
+//            override fun onAdFailedToLoad(errorCode: Int) {
+//                // Code to be executed when an ad request fails.
+//                LogUtils.e("onAdFailedToLoad $errorCode")
+//
+//            }
+//
+//            override fun onAdOpened() {
+//                // Code to be executed when an ad opens an overlay that
+//                // covers the screen.
+//                LogUtils.e("onAdOpened")
+//
+//            }
+//
+//            override fun onAdLeftApplication() {
+//                // Code to be executed when the user has left the app.\
+//                LogUtils.e("onAdLeftApplication")
+//
+//            }
+//
+//            override fun onAdClosed() {
+//                // Code to be executed when when the user is about to return
+//                // to the app after tapping on an ad.
+//                LogUtils.e("onAdClosed")
+//            }
+//        }
     }
 
 
@@ -164,7 +165,7 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
             next.setOnClickListener {
                 moveNextLevel()
             }
-            DialogUtils.showWin(this, "YOU WIN! level ${level!!.id}") {
+            DialogUtils.showWin(this, getString(R.string.you_win) + level!!.id) {
                 moveNextLevel()
             }
         }
@@ -203,10 +204,14 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
     }
 
     override fun onBackPressed() {
+        uiChangeListener()
+        getPresenter(this@GameActivity).pauseGame()
         DialogUtils.showExitConfirm(this@GameActivity, {
             LevelActivity.startLevelActivity(this@GameActivity, Category(level!!.gameKind.id, level!!.gameKind))
             finish()
-        }, {})
+        }, {
+            getPresenter(this@GameActivity).resumeGame()
+        })
 
     }
 
@@ -225,6 +230,13 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
         return ScreenUtils.getHeightScreen(this) - tvTitle.height - ScreenUtils.convertDpToPixel(this, 17)
     }
 
+    override fun showNewCategoryAlert() {
+        uiChangeListener()
+        runOnUiThread {
+            DialogUtils.showUnlockCategory(this)
+        }
+    }
+
     override fun setHeightGame(height: Int) {
         val sfHeight = getSurfaceHeight()
         val margin = (sfHeight - height) / 2
@@ -233,25 +245,22 @@ class GameActivity : BaseActivity<IGameView, GamePresenter>(), SurfaceHolder.Cal
         params.bottomMargin = margin
         mazeView.layoutParams = params
         mazeView.invalidate()
-        if (margin > AdSize.BANNER.height) {
-            initAdMod()
-        } else {
-            LogUtils.e("size not compatible : $margin and ${AdSize.BANNER.height}")
-        }
+//        if (margin > AdSize.BANNER.height) {
+//            initAdMod()
+//        } else {
+//            LogUtils.e("size not compatible : $margin and ${AdSize.BANNER.height}")
+//        }
     }
 
-    private fun initAdMod() {
-        MobileAds.initialize(this, getString(R.string.admod_id))
-        adView.visibility = View.VISIBLE
-        val adRequest = AdRequest.Builder()
-                .addTestDevice("7AA43D1ACCE6C1A407E3F1CEC862C557")
-                .addTestDevice("0A0B5D9EFDED9B1C2449F4B36E440C9B")
-                .addTestDevice(AdRequest.DEVICE_ID_EMULATOR).build()
-        adView.loadAd(adRequest)
-        if (adRequest.isTestDevice(this)) {
-            LogUtils.e("test device")
-        } else {
-            LogUtils.e("not test device")
-        }
-    }
+//    private fun initAdMod() {
+//        MobileAds.initialize(this, getString(R.string.admod_id))
+//        adView.visibility = View.VISIBLE
+//        val adRequest = AdRequest.Builder().build()
+//        adView.loadAd(adRequest)
+//        if (adRequest.isTestDevice(this)) {
+//            LogUtils.e("test device")
+//        } else {
+//            LogUtils.e("not test device")
+//        }
+//    }
 }

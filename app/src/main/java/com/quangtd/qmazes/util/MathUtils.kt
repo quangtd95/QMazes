@@ -4,7 +4,7 @@ package com.quangtd.qmazes.util
  * Created by QuangTD
  * on 1/31/2018.
  */
-public class MathUtils {
+class MathUtils {
     companion object {
         /**
          * return in 0.0..1

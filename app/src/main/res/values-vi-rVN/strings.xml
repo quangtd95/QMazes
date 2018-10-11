@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Q-Mazes</string>
+    <string name="btn_cancel">Hủy bỏ</string>
+    <string name="btn_ok">OK</string>
+    <string name="cancel">Hủy bỏ</string>
+    <string name="exit_game_confirm">Bạn có chắc muốn thoát game? Game hiện tại sẽ không được lưu</string>
+    <string name="lock_level_warning">Màn chơi này đã bị khóa. Hãy thử hoàn thành các màn trước</string>
+    <string name="next">Tiếp tục</string>
+    <string name="OK">OK</string>
+    <string name="play_now">Chơi ngay?</string>
+    <string name="reload">Tải lại game?</string>
+    <string name="reload_current_game">bạn có chắc muốn tải lại màn chơi này?</string>
+    <string name="time_up">HẾT GIỜ</string>
+    <string name="try_again">thử lại</string>
+    <string name="unlock_new_category">Chúc mừng, bạn đã mở khóa chế độ chơi mới</string>
+    <string name="unlock_new_level">Chúc mừng, bạn đã mở khóa màn chơi mới.</string>
+    <string name="you_win">YOU WIN! level</string>
+</resources>

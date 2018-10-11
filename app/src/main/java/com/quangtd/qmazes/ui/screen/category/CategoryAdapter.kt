@@ -38,7 +38,15 @@ class CategoryAdapter(private var mContext: Context) : BaseAdapter<Category, Cat
 
             }
             itemView.tvCategory.text = t.gameKind.nameKind
-            itemView.tvCompleteRate.text = "${(t.numberComplete.toFloat() / t.gameKind.totalLevel * 100).toInt()} %"
+            if (t.isUnlock) {
+                itemView.tvCompleteRate.visibility = View.VISIBLE
+                itemView.imvLock.visibility = View.INVISIBLE
+                itemView.tvCompleteRate.text = "${(t.numberComplete.toFloat() / t.gameKind.totalLevel * 100).toInt()} %"
+            } else {
+                itemView.tvCompleteRate.visibility = View.INVISIBLE
+                itemView.imvLock.visibility = View.VISIBLE
+                itemView.imvLock.setImageDrawable(mContext.resources.getDrawable(R.drawable.btn_locked))
+            }
             itemView.rlLevel.setOnClickListener {
                 onCategoryClickListener?.onClickCategory(t)
             }

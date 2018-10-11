@@ -21,10 +21,16 @@ class CategoryPresenter : BasePresenter<ICategoryView>() {
     }
 
     fun loadData() {
-
         val lstCategory = GameKind.values().map {
             val numberOfComplete = pref?.getInt(String.format(CommonConstants.COMPLETE_PRX, it.nameKind))!!
-            Category(it.id, it, if (numberOfComplete == -1) 0 else numberOfComplete)
+            Category(it.id, it, false, if (numberOfComplete == -1) 0 else numberOfComplete)
+        }
+        lstCategory[0].isUnlock = true
+        for (i in 1 until lstCategory.size) {
+            //nếu màn trước đó, hoàn thành trên 10% thì unlock stage tiếp theo.
+//            if (lstCategory[i - 1].numberComplete >= lstCategory[i - 1].gameKind.totalLevel * 0.1F) {
+                lstCategory[i].isUnlock = true
+//            }
         }
         adapter?.setItems(lstCategory)
     }
