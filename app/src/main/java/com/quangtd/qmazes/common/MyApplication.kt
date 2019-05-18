@@ -1,7 +1,7 @@
 package com.quangtd.qmazes.common
 
 import android.app.Application
-import com.crashlytics.android.Crashlytics
+//import com.crashlytics.android.Crashlytics
 import com.quangtd.qmazes.game.gamemanager.SoundManager
 
 class MyApplication : Application() {
